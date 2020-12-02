@@ -7,4 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="darker_orange">#A35400</color>
+    <color name="dark_orange">#E17300</color>
+    <color name="orange">#F59309</color>
+    <color name="light_orange">#F49D0E</color>
+
+    <color name="page_background">#EEEEEE</color>
+
+
+    <color name="bottom_nav_bar_item_selected">@color/orange</color>
+    <color name="bottom_nav_bar_item_default">#8D8D8D</color>
+    <color name="bottom_nav_bar_background">#D6D6D6</color>
+
+
+
+
+
 </resources>

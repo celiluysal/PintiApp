@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">PintiApp</string>
+    <string name="app_name">Pinti</string>
+    <string name="home_page">Anasayfa</string>
+    <string name="categories_page">Kategoriler</string>
+    <string name="add_product_page">Ürün Ekle</string>
+    <string name="profile_page">Profil</string>
 </resources>
