@@ -6,11 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/colorPrimary"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        />-->
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/toolbar1"
+            android:visibility="visible"/>
+        <include
+            layout="@layout/toolbar2"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+
     <fragment
         android:id="@+id/main_frame_layout"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_layout"
         app:defaultNavHost="true"
         android:layout_above="@id/bottom_nav_bar"
         app:navGraph="@navigation/bottom_navigation" />
@@ -28,8 +52,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu" />
-
-
-
 
 </RelativeLayout>
