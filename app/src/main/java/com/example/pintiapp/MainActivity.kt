@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 //        val toolbar = findViewById<Toolbar>(R.id.toolbar)
 //        val tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        val tb2 = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_2)
+        val tb2 = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
 //        setSupportActionBar(tb)
         setSupportActionBar(tb2)
 //        supportActionBar?.title = ""

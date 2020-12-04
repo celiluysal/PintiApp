@@ -24,7 +24,7 @@
             layout="@layout/toolbar1"
             android:visibility="visible"/>
         <include
-            layout="@layout/toolbar2"
+            layout="@layout/main_toobar"
             android:visibility="visible"/>
     </RelativeLayout>
 
