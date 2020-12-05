@@ -27,8 +27,6 @@ class ProfilePageFragment : Fragment() {
         set_toolbar()
 
 
-
-
         return inflater.inflate(R.layout.profile_page_fragment, container, false)
     }
 

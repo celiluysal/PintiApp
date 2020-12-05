@@ -6,5 +6,7 @@
     <string name="add_product_page">Ürün Ekle</string>
     <string name="profile_page">Profil</string>
     <string name="empty">\0</string>
+    <string name="categories">Kategoriler</string>
+    <string name="markets">Marketler</string>
 
 </resources>

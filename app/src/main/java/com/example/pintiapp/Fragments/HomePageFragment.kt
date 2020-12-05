@@ -33,6 +33,7 @@ class HomePageFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+
     private fun set_toolbar(){
         val m = (activity as AppCompatActivity)
         val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)

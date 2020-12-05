@@ -1,16 +1,16 @@
 package com.example.pintiapp.Fragments
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pintiapp.ViewModels.CategoriesPageViewModel
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.pintiapp.R
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class CategoriesPageFragment : Fragment() {
 
@@ -18,28 +18,66 @@ class CategoriesPageFragment : Fragment() {
         fun newInstance() = CategoriesPageFragment()
     }
 
-    private lateinit var viewModel: CategoriesPageViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
 
         set_toolbar()
 
         return inflater.inflate(R.layout.categories_page_fragment, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CategoriesPageViewModel::class.java)
+
+        deneme()
+
+
 
         // TODO: Use the ViewModel
+    }
+
+    private fun deneme(){
+
+        val viewPager:ViewPager2 = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
+        val tabLayout = (activity as AppCompatActivity).findViewById<TabLayout>(R.id.tablayout)
+
+        viewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int): Fragment {
+                return when(position) {
+                    0 -> {
+                        CategoriesTabFragment.newInstance()
+                    }
+                    1 -> {
+                        MarketsTabFragment.newInstance()
+                    }
+                    else -> {
+                        CategoriesTabFragment.newInstance()
+                    }
+                }
+            }
+
+            override fun getItemCount(): Int {
+                return 2
+            }
+        }
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when(position) {
+                0 -> getString(R.string.categories)
+                1 -> getString(R.string.markets)
+                else -> getString(R.string.categories)
+            }
+        }.attach()
+
+
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewPager = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
+
     }
 
 
@@ -53,16 +91,11 @@ class CategoriesPageFragment : Fragment() {
         main_tb.visibility = Toolbar.INVISIBLE
         m.setSupportActionBar(tb1)
         m.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        tb1_text.text = "kategoriler"
+        tb1_text.text = "Kategoriler"
         tb1.setNavigationOnClickListener(View.OnClickListener {
             m.onBackPressed()
         })
     }
-//
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-
-
 }
+
+

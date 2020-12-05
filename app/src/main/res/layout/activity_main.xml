@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?attr/colorPrimary"-->
-<!--        android:minHeight="?attr/actionBarSize"-->
-<!--        android:theme="?attr/actionBarTheme"-->
-<!--        />-->
-
-
     <RelativeLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="wrap_content"
@@ -24,20 +14,21 @@
             layout="@layout/toolbar1"
             android:visibility="visible"/>
         <include
-            layout="@layout/main_toobar"
+            layout="@layout/main_toolbar"
             android:visibility="visible"/>
     </RelativeLayout>
 
 
     <fragment
-        android:id="@+id/main_frame_layout"
+        android:id="@+id/main_host_fregment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_layout"
-        app:defaultNavHost="true"
         android:layout_above="@id/bottom_nav_bar"
-        app:navGraph="@navigation/bottom_navigation" />
+        app:navGraph="@navigation/bottom_navigation"
+        app:defaultNavHost="true"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_bar"
