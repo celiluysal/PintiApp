@@ -5,8 +5,28 @@
     <string name="categories_page">Kategoriler</string>
     <string name="add_product_page">Ürün Ekle</string>
     <string name="profile_page">Profil</string>
-    <string name="empty">\0</string>
+
     <string name="categories">Kategoriler</string>
     <string name="markets">Marketler</string>
+
+    <string name="email">E-mail</string>
+    <string name="password">Şifre</string>
+    <string name="login">Oturum Aç</string>
+    <string name="accont_question">Hesabınız yok mu?</string>
+    <string name="register">Kaydol</string>
+    <string name="password_again">Şifre Tekrar</string>
+    <string name="full_name">Ad Soyad</string>
+    <string name="login_question">Zaten bir hesabınız var mı?</string>
+
+    <string name="field_cant_be_empty">alanı boş olamaz</string>
+    <string name="did_not_match_passwords">Şifreler aynı değil</string>
+    <string name="wrong_email_type">Yanlış e-mail tipi</string>
+    <string name="short_password">Şifre en az 6 karakterli olmalı</string>
+    <string name="long_password">Şifre en fazla 18 karakterli olmalı</string>
+
+    <string name="login_success">Oturum açıldı</string>
+    <string name="login_failed">Oturum açılamadı</string>
+    <string name="register_success">Hesap oluşturuldu</string>
+    <string name="register_failed">Hesap oluşturulamadı</string>
 
 </resources>

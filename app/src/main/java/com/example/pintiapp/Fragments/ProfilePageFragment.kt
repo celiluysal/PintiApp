@@ -1,15 +1,23 @@
 package com.example.pintiapp.Fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pintiapp.LoginActivity
 import com.example.pintiapp.ViewModels.ProfilePageViewModel
 import com.example.pintiapp.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ProfilePageFragment : Fragment() {
 
@@ -18,16 +26,37 @@ class ProfilePageFragment : Fragment() {
     }
 
     private lateinit var viewModel: ProfilePageViewModel
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val rootView = inflater.inflate(R.layout.profile_page_fragment, container, false)
+
+        auth = Firebase.auth
+        val user = auth.currentUser
+
+        val textView3 = rootView.findViewById<TextView>(R.id.textView3)
+        textView3.text = user?.email.toString()
 
         set_toolbar()
 
+        val buttonLogout = rootView.findViewById<Button>(R.id.buttonLogout)
+        buttonLogout.setOnClickListener {
 
-        return inflater.inflate(R.layout.profile_page_fragment, container, false)
+            Log.e("asd", "button click")
+            auth.signOut()
+
+            activity?.let{
+                val intent = Intent (it, LoginActivity::class.java)
+                it.startActivity(intent)
+                it.finish()
+            }
+        }
+
+
+        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

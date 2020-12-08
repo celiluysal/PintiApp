@@ -15,6 +15,8 @@
         <item name="android:colorBackground">@color/page_background</item>
         <item name="colorSurface">@color/bottom_nav_bar_background</item>
 
+<!--        <item name="boxBackgroundColor">@color/bottom_nav_bar_background</item>-->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

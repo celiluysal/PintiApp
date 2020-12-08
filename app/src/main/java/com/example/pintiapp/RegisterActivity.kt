@@ -1,57 +1,64 @@
 package com.example.pintiapp
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.common.util.DataUtils
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var editTextFullName: TextInputEditText
     private lateinit var editTextEmail: TextInputEditText
     private lateinit var editTextPassword: TextInputEditText
-    private lateinit var buttonLogin: Button
-    private lateinit var register: TextView
+    private lateinit var editTextPasswordAgain: TextInputEditText
+    private lateinit var textViewLogin: TextView
+    private lateinit var buttonRegister: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_register)
 
-        auth = FirebaseAuth.getInstance()
+        auth = Firebase.auth
 
-        editTextEmail = findViewById(R.id.textInputEditTextEmailLogin)
-        editTextPassword= findViewById(R.id.textInputEditTextPasswordLogin)
-        buttonLogin = findViewById(R.id.buttonLogin)
+        editTextFullName = findViewById(R.id.textInputEditTextFullName)
+        editTextEmail = findViewById(R.id.textInputEditTextEmail)
+        editTextPassword = findViewById(R.id.textInputEditTextPassword)
+        editTextPasswordAgain = findViewById(R.id.textInputEditTextPasswordAgain)
 
-        buttonLogin.setOnClickListener {
-            if (checkFields())
-                login(editTextEmail.text.toString(), editTextPassword.text.toString())
-        }
-
-        register = findViewById(R.id.textViewRegister)
-        register.setOnClickListener {
-            startActivity(Intent(this,RegisterActivity::class.java))
+        textViewLogin = findViewById(R.id.textViewLogin)
+        textViewLogin.setOnClickListener {
+            startActivity(Intent(this,LoginActivity::class.java))
             finish()
         }
 
-    }
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-//        updateUI(currentUser)
+        buttonRegister = findViewById(R.id.buttonRegister)
+        buttonRegister.setOnClickListener {
+            if (checkFields())
+                register(editTextEmail.text?.trim().toString(), editTextPassword.text?.trim().toString())
+
+        }
     }
 
     private fun checkFields(): Boolean {
         fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+
+        if (editTextFullName.text.toString().isNullOrBlank()){
+            toast(getString(R.string.full_name) + " " + getString(R.string.field_cant_be_empty))
+            return false
+        }
 
         if (editTextEmail.text.toString().isNullOrBlank()) {
             toast(getString(R.string.email) + " " + getString(R.string.field_cant_be_empty))
@@ -75,33 +82,38 @@ class LoginActivity : AppCompatActivity() {
                 toast(getString(R.string.long_password))
                 return false
             }
+            else if (editTextPassword.text.toString() != editTextPasswordAgain.text.toString()){
+                toast(getString(R.string.did_not_match_passwords))
+            }
         }
+
         return true
     }
 
-    private fun login(email:String, password:String){
-        auth.signInWithEmailAndPassword(email, password)
+    private fun register(email: String, password: String){
+        auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("TAG", "signInWithEmail:success")
+                        Log.e("TAG", "createUserWithEmail:success")
+                        Toast.makeText(baseContext, "Authentication success.",
+                                Toast.LENGTH_SHORT).show()
+
+//                        Log.e("TAG", "user"+ user?.uid.toString())
+
                         val user = auth.currentUser
                         updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w("TAG", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
+                        Log.e("TAG", "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(baseContext, "failed:" + task.exception.toString(),
                                 Toast.LENGTH_SHORT).show()
                         updateUI(null)
-                        // ...
                     }
 
                     // ...
                 }
-
     }
-
-
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null){

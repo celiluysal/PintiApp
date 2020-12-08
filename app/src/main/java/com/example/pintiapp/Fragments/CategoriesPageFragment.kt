@@ -30,14 +30,39 @@ class CategoriesPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        deneme()
+        setTabs()
 
 
 
         // TODO: Use the ViewModel
     }
 
-    private fun deneme(){
+
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewPager = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
+
+    }
+
+    private fun set_toolbar(){
+        val m = (activity as AppCompatActivity)
+        val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val tb1 = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_1)
+        val tb1_text = m.findViewById<TextView>(R.id.toolbar_title)
+
+        tb1.visibility = Toolbar.VISIBLE
+        main_tb.visibility = Toolbar.INVISIBLE
+        m.setSupportActionBar(tb1)
+        m.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        tb1_text.text = "Kategoriler"
+        tb1.setNavigationOnClickListener(View.OnClickListener {
+            m.onBackPressed()
+        })
+    }
+
+    private fun setTabs(){
 
         val viewPager:ViewPager2 = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
         val tabLayout = (activity as AppCompatActivity).findViewById<TabLayout>(R.id.tablayout)
@@ -71,30 +96,6 @@ class CategoriesPageFragment : Fragment() {
         }.attach()
 
 
-    }
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewPager = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
-
-    }
-
-
-    private fun set_toolbar(){
-        val m = (activity as AppCompatActivity)
-        val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val tb1 = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_1)
-        val tb1_text = m.findViewById<TextView>(R.id.toolbar_title)
-
-        tb1.visibility = Toolbar.VISIBLE
-        main_tb.visibility = Toolbar.INVISIBLE
-        m.setSupportActionBar(tb1)
-        m.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        tb1_text.text = "Kategoriler"
-        tb1.setNavigationOnClickListener(View.OnClickListener {
-            m.onBackPressed()
-        })
     }
 }
 

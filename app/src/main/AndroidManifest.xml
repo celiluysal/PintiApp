@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PintiApp">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".LauncherActivity"
             android:theme="@style/splash_theme">

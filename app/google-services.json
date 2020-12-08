@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "772617968614",
+    "project_id": "pinti-eca",
+    "storage_bucket": "pinti-eca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772617968614:android:f720e6105d11d9bf38d427",
+        "android_client_info": {
+          "package_name": "com.example.pintiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772617968614-jo2drgl2l6fejmlov4d35mcd1vr2pirr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIo9XY0sQnZBV1mDXEm2rUeTzSPY2n3Ls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772617968614-jo2drgl2l6fejmlov4d35mcd1vr2pirr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "772617968614-2963caeu6msvfv1nrqnt1vn8vuppj3no.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.demo.Pinti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
