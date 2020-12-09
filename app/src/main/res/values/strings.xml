@@ -9,6 +9,8 @@
     <string name="categories">Kategoriler</string>
     <string name="markets">Marketler</string>
 
+    <string name="price">Fiyat</string>
+
     <string name="email">E-mail</string>
     <string name="password">Şifre</string>
     <string name="login">Oturum Aç</string>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        android:layout_marginStart="@dimen/grid_space"
+        android:layout_marginBottom="@dimen/grid_space">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/grid_space">
+
+            <ImageView
+                android:id="@+id/imageViewProduct"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginHorizontal="@dimen/grid_space"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/luppo4" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/counter_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewProductName"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <include layout="@layout/item_counter_card"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/textViewProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Luppo"
+                android:textSize="20sp"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewProduct" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewProductName">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewShop1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/grid_space"
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="?attr/price_list_item1"
+                    app:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp">
+
+                        <TextView
+                            android:id="@+id/textViewShop1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="A101"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewShop1Price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="4,25₺"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewShop2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/grid_space"
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="?attr/price_list_item2"
+                    app:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp">
+
+                        <TextView
+                            android:id="@+id/textViewShop2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="BİM"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewShop1Price2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="4,25₺"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewShop3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/grid_space"
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="?attr/price_list_item1"
+                    app:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp">
+
+                        <TextView
+                            android:id="@+id/textViewShop3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="BİM"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewShop1Price3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="4,25₺"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -37,6 +37,7 @@
         android:layout_alignParentBottom="true"
         app:itemIconTint="@color/bottom_nav_bar_selector"
         app:itemTextColor="@color/bottom_nav_bar_selector"
+        android:background="?attr/bottom_nav_bar_background"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

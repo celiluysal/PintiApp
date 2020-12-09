@@ -84,6 +84,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             else if (editTextPassword.text.toString() != editTextPasswordAgain.text.toString()){
                 toast(getString(R.string.did_not_match_passwords))
+                return false
             }
         }
 

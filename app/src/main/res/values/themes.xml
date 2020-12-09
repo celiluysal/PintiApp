@@ -13,7 +13,10 @@
         <item name="colorOnSecondary">@color/white</item>
 
         <item name="android:colorBackground">@color/page_background</item>
-        <item name="colorSurface">@color/bottom_nav_bar_background</item>
+        <item name="bottom_nav_bar_background">@color/bottom_nav_bar_background</item>
+
+        <item name="price_list_item1">@color/price_list_orange</item>
+        <item name="price_list_item2">@color/price_list_gray</item>
 
 <!--        <item name="boxBackgroundColor">@color/bottom_nav_bar_background</item>-->
 
