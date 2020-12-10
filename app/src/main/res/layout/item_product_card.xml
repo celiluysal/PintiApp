@@ -6,8 +6,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
-
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,16 +31,14 @@
                 app:srcCompat="@drawable/luppo4" />
 
 
-
             <RelativeLayout
                 android:id="@+id/counter_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewProductName"
+                app:layout_constraintBottom_toTopOf="@+id/textViewProductName"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <include layout="@layout/item_counter_card"/>
+                <include layout="@layout/item_counter_card" />
             </RelativeLayout>
 
 
@@ -52,7 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Luppo"
-                android:textSize="20sp"
+                android:maxLines="1"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
 
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.pintiapp.ViewModels.AddProductPageViewModel
 import com.example.pintiapp.R
 
@@ -18,15 +20,24 @@ class AddProductPageFragment : Fragment() {
     }
 
     private lateinit var viewModel: AddProductPageViewModel
+    private lateinit var cardViewScanBarcode: CardView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        val rootView = inflater.inflate(R.layout.add_product_page_fragment, container, false)
         set_toolbar()
 
-        return inflater.inflate(R.layout.add_product_page_fragment, container, false)
+        cardViewScanBarcode = rootView.findViewById(R.id.cardViewScanBarcode)
+        cardViewScanBarcode.setOnClickListener {
+            Toast.makeText(activity,"barcode",Toast.LENGTH_SHORT).show()
+        }
+
+
+
+        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

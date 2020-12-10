@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.Models.ProductModel
 import com.example.pintiapp.R
 
-class HomeRecyclerViewAdaptor(val productList: List<ProductModel>): RecyclerView.Adapter<HomeRecyclerViewAdaptor.HomeViewHolder>() {
+class ProductRecyclerViewAdapter(val productList: List<ProductModel>, var clickListener: OnProductItemClickListener): RecyclerView.Adapter<ProductRecyclerViewAdapter.HomeViewHolder>() {
 
     class HomeViewHolder(container: ViewGroup): RecyclerView.ViewHolder(
             LayoutInflater.from(container.context).inflate(
@@ -23,9 +23,19 @@ class HomeRecyclerViewAdaptor(val productList: List<ProductModel>): RecyclerView
         val textViewCounter : TextView = itemView.findViewById(R.id.textViewCounter)
         val counter_layout : RelativeLayout = itemView.findViewById(R.id.counter_layout)
 
-        fun bind(productModel: ProductModel){
+//        fun init(item: ProductModel, action: OnProductItemClickListener) {
+//
+//        }
+
+        fun bind(productModel: ProductModel, action: OnProductItemClickListener){
             imageViewProduct.setImageResource(productModel.productPictureResource)
-            textViewProductName.text = productModel.productName
+
+            if (productModel.productName.length > 15){
+                val displayProductName = productModel.productName.substring(0,15) + "..."
+                textViewProductName.text = displayProductName
+            }
+            else
+                textViewProductName.text = productModel.productName
 
             if (productModel.recordCount > 3){
                 textViewCounter.text = (
@@ -35,19 +45,30 @@ class HomeRecyclerViewAdaptor(val productList: List<ProductModel>): RecyclerView
             else
                 counter_layout.visibility = RelativeLayout.INVISIBLE
 
+            itemView.setOnClickListener {
+                action.onProductCardClick(productModel, adapterPosition)
+            }
+
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+
         return HomeViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        return holder.bind(productList[position])
+        return holder.bind(productList[position], clickListener)
     }
 
     override fun getItemCount(): Int {
         return productList.size
     }
+
+    interface OnProductItemClickListener{
+        fun onProductCardClick(item: ProductModel, position: Int)
+    }
+
 
 }

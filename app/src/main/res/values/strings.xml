@@ -30,5 +30,7 @@
     <string name="login_failed">Oturum açılamadı</string>
     <string name="register_success">Hesap oluşturuldu</string>
     <string name="register_failed">Hesap oluşturulamadı</string>
+    <string name="scan_barcode">Barkod Tara</string>
+    <string name="scan_barcode_description">Fiyat bilgisi eklemek veya yeni bir ürün oluşturmak için lütfen barkodu tarayınız.</string>
 
 </resources>
