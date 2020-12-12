@@ -1,22 +1,23 @@
 package com.example.pintiapp.Fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.example.pintiapp.BarcodeScanActivity
 import com.example.pintiapp.ViewModels.AddProductPageViewModel
 import com.example.pintiapp.R
 
-class AddProductPageFragment : Fragment() {
+class ScanBarcodePageFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AddProductPageFragment()
+        fun newInstance() = ScanBarcodePageFragment()
     }
 
     private lateinit var viewModel: AddProductPageViewModel
@@ -27,12 +28,16 @@ class AddProductPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val rootView = inflater.inflate(R.layout.add_product_page_fragment, container, false)
+        val rootView = inflater.inflate(R.layout.scan_barcode_page_fragment, container, false)
         set_toolbar()
 
         cardViewScanBarcode = rootView.findViewById(R.id.cardViewScanBarcode)
         cardViewScanBarcode.setOnClickListener {
-            Toast.makeText(activity,"barcode",Toast.LENGTH_SHORT).show()
+            activity?.let{
+                val intent = Intent (it, BarcodeScanActivity::class.java)
+                it.startActivity(intent)
+//                it.finish()
+            }
         }
 
 

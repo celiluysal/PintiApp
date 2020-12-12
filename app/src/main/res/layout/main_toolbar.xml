@@ -10,7 +10,7 @@
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/toolbar_background"
         android:minHeight="?attr/actionBarSize"
         android:padding="0dp"
         app:contentInsetStart="0dp"
@@ -29,8 +29,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_pinti_white"
-            tools:ignore="VectorDrawableCompat"/>
+            app:srcCompat="@drawable/pinti_logo"
+            tools:ignore="VectorDrawableCompat"
+            app:tint="?attr/toolbar_logo_tint" />
     </androidx.appcompat.widget.Toolbar>
 
 

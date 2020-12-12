@@ -12,6 +12,10 @@
         <item name="colorSecondaryVariant">@color/darker_orange</item>
         <item name="colorOnSecondary">@color/white</item>
 
+        <item name="toolbar_background">?attr/colorPrimary</item>
+        <item name="toolbar_logo_tint">@color/white</item>
+
+
         <item name="android:colorBackground">@color/page_background</item>
         <item name="bottom_nav_bar_background">@color/bottom_nav_bar_background</item>
 

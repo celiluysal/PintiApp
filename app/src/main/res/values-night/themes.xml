@@ -5,13 +5,16 @@
         <item name="windowNoTitle">true</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/darker_orange</item>
+        <item name="colorPrimaryVariant">@color/red</item>
+
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange</item>
         <item name="colorSecondaryVariant">@color/darker_orange</item>
         <item name="colorOnSecondary">@color/black</item>
 
+        <item name="toolbar_background">@color/toolbar_night</item>
+        <item name="toolbar_logo_tint">?attr/colorPrimary</item>
 
         <item name="bottom_nav_bar_background">?attr/colorSurface</item>
 
@@ -20,7 +23,7 @@
 
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/statusbar_night</item>
         <!-- Customize your theme here. -->
 
 <!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->

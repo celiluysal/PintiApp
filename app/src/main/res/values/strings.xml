@@ -32,5 +32,9 @@
     <string name="register_failed">Hesap oluşturulamadı</string>
     <string name="scan_barcode">Barkod Tara</string>
     <string name="scan_barcode_description">Fiyat bilgisi eklemek veya yeni bir ürün oluşturmak için lütfen barkodu tarayınız.</string>
+    <string name="product_name">Ürün Adı</string>
+    <string name="save">Kaydet</string>
+    <string name="brand">Marka</string>
+    <string name="location">Konum</string>
 
 </resources>

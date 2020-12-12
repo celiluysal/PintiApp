@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="red">#FF0000</color>
-    <color name="transparent">#0AFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 
 
     <color name="darker_orange">#A35400</color>
@@ -24,17 +24,16 @@
     <color name="price_list_gray">#EBEBEB</color>
     <color name="price_list_gray_night">#292929</color>
 
+    <color name="toolbar_night">#1F1F1F</color>
+    <color name="statusbar_night">@color/black</color>
 
-<!--        <color name="price_list_orange">#FFF3E0</color>&ndash;&gt;-->
-<!--    <color name="price_list_gray">#F5F5F5</color>-->
 
     <color name="a">?attr/colorSurface</color>
     <attr name="price_list_item1"/>
     <attr name="price_list_item2"/>
     <attr name="bottom_nav_bar_background"/>
-    <attr name="counter_background">#F59309</attr>
-
-
+    <attr name="toolbar_background"/>
+    <attr name="toolbar_logo_tint"/>
 
     <color name="bottom_nav_bar_item_selected">@color/orange</color>
     <color name="bottom_nav_bar_item_default">#8D8D8D</color>
@@ -55,6 +54,8 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">16dp</item>
     </style>
+
+
 
 
 

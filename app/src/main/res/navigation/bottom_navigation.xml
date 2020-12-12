@@ -16,9 +16,9 @@
         tools:layout="@layout/categories_page_fragment" />
     <fragment
         android:id="@+id/addProductPageFragment"
-        android:name="com.example.pintiapp.Fragments.AddProductPageFragment"
+        android:name="com.example.pintiapp.Fragments.ScanBarcodePageFragment"
         android:label="add_product_page_fragment"
-        tools:layout="@layout/add_product_page_fragment" />
+        tools:layout="@layout/scan_barcode_page_fragment" />
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.example.pintiapp.Fragments.ProfilePageFragment"

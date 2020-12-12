@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pintiapp">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PintiApp">
-        <activity android:name=".AddProductActivity"></activity>
+        <activity android:name=".BarcodeScanActivity"></activity>
+        <activity android:name=".AddProductActivity" />
         <activity
             android:name=".ProductDetailActivity"
             android:screenOrientation="portrait" />
