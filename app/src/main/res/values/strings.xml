@@ -40,6 +40,12 @@
     <string name="save">Kaydet</string>
     <string name="brand">Marka</string>
     <string name="location">Konum</string>
+
     <string name="add_photo">Fotoğraf Ekle</string>
+    <string name="photo_added">Fotoğraf Eklendi</string>
+
     <string name="scan_pricetag">Etiket Tara</string>
+    <string name="pricetag_scanned">Etiket Tarandı</string>
+
+    <string name="product_photo">Ürün fotoğrafı</string>
 </resources>

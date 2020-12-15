@@ -41,7 +41,7 @@
                     android:paddingHorizontal="@dimen/grid_space">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cardViewAddProductPicture"
+                        android:id="@+id/cardViewAddPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="4dp"
@@ -63,6 +63,7 @@
                                 android:src="@drawable/im_add_product"/>
 
                             <TextView
+                                android:id="@+id/textViewAddPhoto"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
@@ -79,7 +80,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cardViewAddPricePicture"
+                        android:id="@+id/cardViewAddPricetag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="4dp"
@@ -103,11 +104,12 @@
                                 android:src="@drawable/im_add_pricetag"/>
 
                             <TextView
+                                android:id="@+id/textViewAddPricetag"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:layout_below="@id/imageViewAddPricetag"
-                                android:text="@string/add_photo"
+                                android:text="@string/scan_barcode"
                                 android:layout_centerHorizontal="true"
                                 android:maxLines="1"
                                 android:textSize="18sp"
@@ -234,43 +236,28 @@
                         </RelativeLayout>
 
 
-                        <RelativeLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLocationTitle"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/imageViewLocation"
+                            android:layout_marginStart="24dp"
                             android:layout_marginTop="16dp"
-                            android:orientation="horizontal">
+                            android:layout_marginEnd="24dp">
 
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/textInputLocationTitle"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@+id/imageViewLocation"
-                                    android:layout_marginStart="24dp">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/textInputEditTextLocationTitle"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:drawableStart="@drawable/ic_person"
-                                        android:drawablePadding="8dp"
-                                        android:hint="@string/location"
-                                        android:inputType="text"
-                                        android:maxLines="1" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                            <ImageView
-                                android:id="@+id/imageViewLocation"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textInputEditTextLocationTitle"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="24dp"
-                                android:layout_alignBottom="@+id/textInputLocationTitle"
-                                android:layout_marginBottom="2dp"
-                                app:srcCompat="@drawable/ic_location"
-                                tools:ignore="VectorDrawableCompat" />
-                        </RelativeLayout>
+                                android:drawableStart="@drawable/ic_person"
+                                android:drawablePadding="8dp"
+                                android:enabled="false"
+                                android:hint="@string/location"
+                                android:inputType="text"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputProductPrice"

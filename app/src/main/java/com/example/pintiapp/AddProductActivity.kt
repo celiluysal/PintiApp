@@ -1,8 +1,12 @@
 package com.example.pintiapp
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -11,10 +15,13 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.google.android.material.textfield.TextInputEditText
@@ -35,13 +42,19 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var spinnerCategory: Spinner
     private lateinit var spinnerMarket: Spinner
 
+    private lateinit var cardViewAddPhoto: CardView
+    private lateinit var imageViewAddPhoto: ImageView
+    private lateinit var textViewAddPhoto: TextView
+
+    private lateinit var cardViewAddPricetag: CardView
+    private lateinit var imageViewAddPricetag: ImageView
+    private lateinit var textViewAddPricetag: TextView
+
     private lateinit var buttonSave: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
-
-        val barcode = intent.getStringExtra("barcode")
 
         textInputEditTextProductName = findViewById(R.id.textInputEditTextProductName)
         textInputEditTextProductBrand = findViewById(R.id.textInputEditTextProductBrand)
@@ -57,23 +70,80 @@ class AddProductActivity : AppCompatActivity() {
         spinnerCategory = findViewById(R.id.spinnerCategory)
         spinnerMarket = findViewById(R.id.spinnerMarket)
 
+        cardViewAddPhoto = findViewById(R.id.cardViewAddPhoto)
+        imageViewAddPhoto = findViewById(R.id.imageViewAddPhoto)
+        textViewAddPhoto = findViewById(R.id.textViewAddPhoto)
+
+        cardViewAddPricetag = findViewById(R.id.cardViewAddPricetag)
+        imageViewAddPricetag = findViewById(R.id.imageViewAddPricetag)
+        textViewAddPricetag = findViewById(R.id.textViewAddPricetag)
+
         buttonSave = findViewById(R.id.buttonSave)
 
-//        textInputSpinnerCategory.hint = null
 
 
 
-        textInputEditTextProductName.setText("Luppo")
+        setToolbar()
 
         getLocation()
 
+        setSpinnerCategory()
+        setSpinnerMarket()
+
+        cardViewAddPhoto.setOnClickListener {
+            takePhoto()
+        }
+
+        buttonSave.setOnClickListener {
+            checkFields()
+        }
 
 
-//        textInputEditTextSpinnerCategory.setHintTextColor(Color.TRANSPARENT)
+        val barcode = intent.getStringExtra("barcode")
+        if (barcode != null) {
+            textInputEditTextProductName.setText(barcode.toString())
+            textInputEditTextProductName.isEnabled = false
+        }
 
-//        textInputEditTextSpinnerCategory.isEnabled = false
 
 
+    }
+
+    private val PHOTO_RQ = 100
+    private fun takePhoto() {
+        val takePhotoIntent =  Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        if (takePhotoIntent.resolveActivity(this.packageManager) != null) {
+            startActivityForResult(takePhotoIntent, PHOTO_RQ)
+        } else {
+            Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PHOTO_RQ && resultCode == Activity.RESULT_OK) {
+            val photo = data?.extras?.get("data") as Bitmap
+            setCarviewAddPhoto(photo)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun setCarviewAddPhoto(photo: Bitmap){
+        imageViewAddPhoto.setImageBitmap(photo)
+        textViewAddPhoto.text = getString(R.string.photo_added)
+    }
+
+    private fun setToolbar(){
+        val main_tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        setSupportActionBar(main_tb)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        main_tb.setNavigationOnClickListener(View.OnClickListener {
+            onBackPressed()
+        })
+    }
+
+    private fun setSpinnerCategory(){
         val category_list = arrayOf("Kategori","İçecekler", "siksuyu")
 
         spinnerCategory.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, category_list)
@@ -92,7 +162,9 @@ class AddProductActivity : AppCompatActivity() {
 //                Toast.makeText(applicationContext, options.get(p2), Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    private fun setSpinnerMarket(){
         val market_list = arrayOf("Market","A101", "BİM")
 
         spinnerMarket.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, market_list)
@@ -111,125 +183,18 @@ class AddProductActivity : AppCompatActivity() {
 //                Toast.makeText(applicationContext, options.get(p2), Toast.LENGTH_SHORT).show()
             }
         }
-
-
-        buttonSave.setOnClickListener {
-//            Toast.makeText(applicationContext, "buttoooooon", Toast.LENGTH_SHORT).show()
-            checkFields()
-        }
-
-        if (barcode != null) {
-            textInputEditTextProductName.setText(barcode.toString())
-            textInputEditTextProductName.isEnabled = false
-        }
-
-        val main_tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        setSupportActionBar(main_tb)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        main_tb.setNavigationOnClickListener(View.OnClickListener {
-            onBackPressed()
-        })
-
     }
 
-    //Declaring the needed Variables
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    val PERMISSION_ID = 1010
+    private fun setLocationTitle(location: Location){
+        val geoCoder = Geocoder(this, Locale.getDefault())
+        val adress = geoCoder.getFromLocation(location.latitude, location.longitude,1)
 
-    private fun getLocation(){
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-//            Log.d("Debug:",CheckPermission().toString())
-            Log.d("Debug:",isLocationEnabled().toString())
-//            RequestPermission()
-            /* fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
-                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
-             }*/
-//            getLastLocation()
-        NewLocationData()
+        val locationTitle = adress[0].thoroughfare + ", " +
+                adress[0].subAdminArea.toString() + ", " +
+                adress[0].adminArea.toString()
+
+        textInputEditTextLocationTitle.setText(locationTitle)
     }
-
-    fun isLocationEnabled():Boolean{
-        //this function will return to us the state of the location service
-        //if the gps or the network provider is enabled then it will return true otherwise it will return false
-        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-    }
-//
-//    fun getLastLocation(){
-//            if(isLocationEnabled()){
-//                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    // TODO: Consider calling
-//                    //    ActivityCompat#requestPermissions
-//                    // here to request the missing permissions, and then overriding
-//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                    //                                          int[] grantResults)
-//                    // to handle the case where the user grants the permission. See the documentation
-//                    // for ActivityCompat#requestPermissions for more details.
-//                    return
-//                }
-//                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
-//                    var location: Location? = task.result
-//                    if(location == null){
-//                        NewLocationData()
-//                    }else{
-//                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
-//                        textInputEditTextLocationTitle.setText(getCityName(location.latitude,location.longitude))
-//                    }
-//                }
-//            }else{
-//                Toast.makeText(this,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
-//            }
-//    }
-
-    fun NewLocationData(){
-        var locationRequest =  LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 0
-        locationRequest.fastestInterval = 0
-        locationRequest.numUpdates = 1
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationProviderClient!!.requestLocationUpdates(
-                locationRequest,locationCallback, Looper.myLooper()
-        )
-    }
-
-
-    private val locationCallback = object : LocationCallback(){
-        override fun onLocationResult(locationResult: LocationResult) {
-            var lastLocation: Location = locationResult.lastLocation
-            Log.d("Debug:","your last last location: "+ lastLocation.longitude.toString())
-//            textInputEditTextLocationTitle.text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(lastLocation.latitude,lastLocation.longitude)
-//            textInputEditTextLocationTitle.setText(getCityName(lastLocation.latitude,lastLocation.longitude))
-            textInputEditTextLocationTitle.setText(getCityName(lastLocation.latitude,lastLocation.longitude).toString())
-        }
-    }
-
-    private fun getCityName(lat: Double,long: Double): MutableList<Address>? {
-        var cityName:String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat,long,3)
-
-        cityName = Adress.get(0)?.locality.toString()
-        countryName = Adress.get(0)?.countryName.toString()
-        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
-        Log.d("Debug:",Adress.get(1).toString())
-        return Adress
-    }
-
-
-
 
     private fun checkFields(): Boolean {
         fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
@@ -282,4 +247,66 @@ class AddProductActivity : AppCompatActivity() {
 
         return true
     }
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private fun getLocation(){
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        getLastLocation()
+    }
+
+    fun isLocationEnabled():Boolean{
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getLastLocation() {
+        var lastLocation: Location? = null
+        if(isLocationEnabled()){
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
+                    var location: Location? = task.result
+                    if(location == null){
+                        NewLocationData()
+                    }else{
+                        Log.e("Debug:" ,"Your Location:"+ location.longitude)
+                        setLocationTitle(location)
+                    }
+                }
+            }else{
+                Log.e("sfb", "location false")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Konum Servisi Gerekli")
+                builder.setMessage("Market konumu için konum sevisini aktif etmelisiniz.")
+                builder.setPositiveButton("Tamam") { dialog, which ->
+                    dialog.cancel()
+                    onBackPressed()
+                }
+                builder.show()
+            }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun NewLocationData() {
+        var lastLocation: Location? = null
+        var locationRequest =  LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+//        locationRequest.numUpdates = 1
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient!!.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.myLooper()
+        )
+    }
+
+    private val locationCallback = object : LocationCallback(){
+        lateinit var lastLocation: Location
+        override fun onLocationResult(locationResult: LocationResult) {
+            lastLocation = locationResult.lastLocation
+            setLocationTitle(lastLocation)
+        }
+    }
+
 }
