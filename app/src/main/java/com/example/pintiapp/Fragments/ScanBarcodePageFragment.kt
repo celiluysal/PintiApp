@@ -1,17 +1,14 @@
  package com.example.pintiapp.Fragments
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ImageView
 import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,17 +16,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.pintiapp.AddProductActivity
-import com.example.pintiapp.BarcodeScanActivity
 import com.example.pintiapp.ViewModels.AddProductPageViewModel
 import com.example.pintiapp.R
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 
-class ScanBarcodePageFragment : Fragment() {
+ class ScanBarcodePageFragment : Fragment() {
 
     companion object {
         fun newInstance() = ScanBarcodePageFragment()
@@ -44,7 +34,7 @@ class ScanBarcodePageFragment : Fragment() {
     ): View? {
 
         val rootView = inflater.inflate(R.layout.scan_barcode_page_fragment, container, false)
-        set_toolbar()
+        setToolbar()
 
         cardViewScanBarcode = rootView.findViewById(R.id.cardViewScanBarcode)
         cardViewScanBarcode.setOnClickListener {
@@ -62,16 +52,15 @@ class ScanBarcodePageFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    private fun set_toolbar(){
-        val m = (activity as AppCompatActivity)
-        val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val tb1 = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_1)
+     private fun setToolbar(){
+         val m = (activity as AppCompatActivity)
+         val toolbar = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+         val imageViewSearch = m.findViewById<ImageView>(R.id.imageViewSearch)
+         val imageViewBack = m.findViewById<ImageView>(R.id.imageViewBack)
 
-        tb1.visibility = Toolbar.INVISIBLE
-        main_tb.visibility = Toolbar.VISIBLE
-        m.setSupportActionBar(main_tb)
-        m.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
+         imageViewSearch.visibility = ImageView.INVISIBLE
+         imageViewBack.visibility = ImageView.INVISIBLE
+     }
 
     private fun checkForPermissions(permission: String, name: String, requestCode: Int): Boolean{
 

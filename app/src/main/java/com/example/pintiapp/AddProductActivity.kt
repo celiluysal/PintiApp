@@ -24,11 +24,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationRequest
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class AddProductActivity : AppCompatActivity() {
+    private val PRODUCT_PHOTO_RQ = 100
+    private val PRICETAG_PHOTO_RQ = 101
+
     private lateinit var textInputEditTextProductName: TextInputEditText
     private lateinit var textInputEditTextProductBrand: TextInputEditText
     private lateinit var textInputEditTextLocationTitle: TextInputEditText
@@ -91,7 +95,11 @@ class AddProductActivity : AppCompatActivity() {
         setSpinnerMarket()
 
         cardViewAddPhoto.setOnClickListener {
-            takePhoto()
+            takePhoto(PRODUCT_PHOTO_RQ)
+        }
+
+        cardViewAddPricetag.setOnClickListener {
+            takePhoto(PRICETAG_PHOTO_RQ)
         }
 
         buttonSave.setOnClickListener {
@@ -104,43 +112,57 @@ class AddProductActivity : AppCompatActivity() {
             textInputEditTextProductName.setText(barcode.toString())
             textInputEditTextProductName.isEnabled = false
         }
-
-
-
     }
 
-    private val PHOTO_RQ = 100
-    private fun takePhoto() {
-        val takePhotoIntent =  Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun takePhoto(requestCode: Int) {
+        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
 
         if (takePhotoIntent.resolveActivity(this.packageManager) != null) {
-            startActivityForResult(takePhotoIntent, PHOTO_RQ)
+            startActivityForResult(takePhotoIntent, requestCode)
         } else {
             Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PHOTO_RQ && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PRODUCT_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
             val photo = data?.extras?.get("data") as Bitmap
-            setCarviewAddPhoto(photo)
-        } else {
+            setCardViewAddPhoto(photo)
+        }
+        else if (requestCode == PRICETAG_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
+            val photo = data?.extras?.get("data") as Bitmap
+            setCardViewAddPricetag(photo)
+        }
+        else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    private fun setCarviewAddPhoto(photo: Bitmap){
+    private fun setCardViewAddPricetag(photo: Bitmap) {
+        imageViewAddPricetag.setImageBitmap(photo)
+        textViewAddPricetag.text = getString(R.string.pricetag_scanned)
+    }
+
+    private fun setCardViewAddPhoto(photo: Bitmap){
         imageViewAddPhoto.setImageBitmap(photo)
         textViewAddPhoto.text = getString(R.string.photo_added)
     }
 
     private fun setToolbar(){
-        val main_tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        setSupportActionBar(main_tb)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        main_tb.setNavigationOnClickListener(View.OnClickListener {
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+
+        setSupportActionBar(toolbar)
+
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.VISIBLE
+
+        imageViewBack.setOnClickListener {
             onBackPressed()
-        })
+        }
     }
 
     private fun setSpinnerCategory(){
@@ -254,13 +276,13 @@ class AddProductActivity : AppCompatActivity() {
         getLastLocation()
     }
 
-    fun isLocationEnabled():Boolean{
+    private fun isLocationEnabled():Boolean{
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
     @SuppressLint("MissingPermission")
-    fun getLastLocation() {
+    private fun getLastLocation() {
         var lastLocation: Location? = null
         if(isLocationEnabled()){
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
@@ -286,7 +308,7 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    fun NewLocationData() {
+    private fun NewLocationData() {
         var lastLocation: Location? = null
         var locationRequest =  LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.zxing.Result
@@ -23,16 +24,12 @@ class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barcode_scan)
 
+        setToolbar()
+
         zxscan = findViewById(R.id.zxscan)
         zxscan.setResultHandler (this@BarcodeScanActivity)
         zxscan.startCamera()
 
-        val main_tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        setSupportActionBar(main_tb)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        main_tb.setNavigationOnClickListener(View.OnClickListener {
-            onBackPressed()
-        })
 
     }
 
@@ -44,6 +41,21 @@ class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler 
             intent.putExtra("barcode", barcode)
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun setToolbar(){
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+
+        setSupportActionBar(toolbar)
+
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.VISIBLE
+
+        imageViewBack.setOnClickListener {
+            onBackPressed()
         }
     }
 }

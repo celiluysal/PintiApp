@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        setToolbar()
 
         auth = FirebaseAuth.getInstance()
 
@@ -102,7 +105,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
     private fun updateUI(user: FirebaseUser?) {
         if (user != null){
             startActivity(Intent(this,MainActivity::class.java))
@@ -111,5 +113,16 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Oturum açılamadı.",
                     Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setToolbar(){
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+
+        setSupportActionBar(toolbar)
+
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.INVISIBLE
     }
 }

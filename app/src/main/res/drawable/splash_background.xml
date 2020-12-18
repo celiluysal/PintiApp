@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/orange"/>
-    <item>
-        <bitmap android:src="@drawable/im_pinti_white"
-            android:gravity="center"/>
+    <item android:drawable="?attr/toolbar_background"/>
+    <item android:drawable="@drawable/pinti_logo" android:gravity="center">
     </item>
 </layer-list>

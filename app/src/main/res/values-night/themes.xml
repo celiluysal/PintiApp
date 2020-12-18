@@ -15,6 +15,9 @@
 
         <item name="toolbar_background">@color/toolbar_night</item>
         <item name="toolbar_logo_tint">?attr/colorPrimary</item>
+        <item name="toolbar_icon_tint">?attr/colorPrimary</item>
+        <item name="search_bar_background">@color/search_bar_background_night</item>
+
 
         <item name="bottom_nav_bar_background">?attr/colorSurface</item>
 

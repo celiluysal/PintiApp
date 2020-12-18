@@ -1,14 +1,17 @@
 package com.example.pintiapp.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.pintiapp.AddProductActivity
 import com.example.pintiapp.R
+import com.example.pintiapp.SearchActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -22,7 +25,7 @@ class CategoriesPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        set_toolbar()
+        setToolbar()
 
         return inflater.inflate(R.layout.categories_page_fragment, container, false)
     }
@@ -46,20 +49,26 @@ class CategoriesPageFragment : Fragment() {
 
     }
 
-    private fun set_toolbar(){
+    private fun setToolbar(){
         val m = (activity as AppCompatActivity)
-        val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val tb1 = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_1)
-        val tb1_text = m.findViewById<TextView>(R.id.toolbar_title)
+        val toolbar = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = m.findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = m.findViewById<ImageView>(R.id.imageViewBack)
 
-        tb1.visibility = Toolbar.VISIBLE
-        main_tb.visibility = Toolbar.INVISIBLE
-        m.setSupportActionBar(tb1)
-        m.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        tb1_text.text = "Kategoriler"
-        tb1.setNavigationOnClickListener(View.OnClickListener {
+        imageViewSearch.visibility = ImageView.VISIBLE
+        imageViewBack.visibility = ImageView.INVISIBLE
+
+        m.setSupportActionBar(toolbar)
+        imageViewBack.setOnClickListener {
             m.onBackPressed()
-        })
+        }
+
+        imageViewSearch.setOnClickListener {
+            activity?.let{
+                val intent = Intent (it, SearchActivity::class.java)
+                it.startActivity(intent)
+            }
+        }
     }
 
     private fun setTabs(){

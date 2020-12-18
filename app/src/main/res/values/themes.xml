@@ -14,6 +14,8 @@
 
         <item name="toolbar_background">?attr/colorPrimary</item>
         <item name="toolbar_logo_tint">@color/white</item>
+        <item name="toolbar_icon_tint">@color/white</item>
+        <item name="search_bar_background">@color/search_bar_background</item>
 
 
         <item name="android:colorBackground">@color/page_background</item>
