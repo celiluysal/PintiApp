@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.pintiapp.AddProductActivity
+import com.example.pintiapp.BarcodeScanActivity
 import com.example.pintiapp.ViewModels.AddProductPageViewModel
 import com.example.pintiapp.R
 
@@ -39,7 +40,7 @@ import com.example.pintiapp.R
         cardViewScanBarcode = rootView.findViewById(R.id.cardViewScanBarcode)
         cardViewScanBarcode.setOnClickListener {
             activity?.let{
-                val intent = Intent (it, AddProductActivity::class.java)
+                val intent = Intent (it, BarcodeScanActivity::class.java)
                 it.startActivity(intent)
             }
         }

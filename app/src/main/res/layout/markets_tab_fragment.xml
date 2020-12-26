@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.MarketsTabFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMarket"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Marketler tabı" />
-
+        android:paddingTop="@dimen/grid_space"
+        android:paddingEnd="@dimen/grid_space"/>
 </FrameLayout>

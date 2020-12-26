@@ -39,6 +39,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/nav_menu"
+        app:itemTextAppearanceActive="@style/bottom_nav_bar_style"
+        app:itemTextAppearanceInactive="@style/bottom_nav_bar_style"/>
 
 </RelativeLayout>

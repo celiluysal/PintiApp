@@ -80,33 +80,68 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
     }
 
     private fun createProductList(): List<ProductModel>{
+        val record1 = RecordModel(
+            "A101",
+            "Kemalpaşa mahallesi",
+            "28.10.2020",
+            "Celil Uysal",
+            "5,75"
+        )
+        val record2 = RecordModel(
+            "Şok",
+            "Kemalpaşa mahallesi",
+            "24.10.2020",
+            "Emin Özkalaycıoğlu",
+            "5,99"
+        )
+        val record3 = RecordModel(
+            "BİM",
+            "Kemalpaşa mahallesi",
+            "27.10.2020",
+            "Ali Gündoğdu",
+            "4,25"
+        )
+        val record4 = RecordModel(
+            "Hakmar",
+            "Kemalpaşa mahallesi",
+            "25.10.2020",
+            "Ali Gündoğdu",
+            "6.00"
+        )
+
+        val record_list1 = listOf(record1,record2,record3,record4)
+        val record_list2 = listOf(record1,record2)
+        val record_list3 = listOf(record4)
+        val record_list4 = listOf(record1,record2,record3,record4,record1,record2)
+
+
         val luppo1 = ProductModel(
-                "Luppo",
-                "Ülker",
-                R.drawable.luppo,
-                5,
-                createRecordList()
+            "Luppo",
+            "Ülker",
+            R.drawable.luppo,
+            record_list1.size,
+            record_list1
         )
         val luppo2 = ProductModel(
-                "Ülker çikolatalılılılıııııı gofret",
-                "Ülker",
-                R.drawable.luppo2,
-                4,
-                createRecordList()
+            "Ülker çikolatalılılılıııııı gofret",
+            "Ülker",
+            R.drawable.luppo2,
+            record_list2.size,
+            record_list2
         )
         val luppo3 = ProductModel(
-                "Luppo",
-                "Ülker",
-                R.drawable.luppo3,
-                7,
-                createRecordList()
+            "Luppo",
+            "Ülker",
+            R.drawable.luppo3,
+            record_list3.size,
+            record_list3
         )
         val luppo4 = ProductModel(
-                "Ülker çikolatalı gofret",
-                "Ülker",
-                R.drawable.luppo4,
-                2,
-                createRecordList()
+            "Ülker çikolatalı gofret",
+            "Ülker",
+            R.drawable.luppo4,
+            record_list4.size,
+            record_list4
         )
         return listOf(luppo1,luppo2,luppo3,luppo4,luppo1,luppo2,luppo3,luppo4)
 
@@ -135,7 +170,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
                 "4,25"
         )
 
-        return listOf(record1,record2,record3)
+        return listOf(record1,record2)
     }
 
 }

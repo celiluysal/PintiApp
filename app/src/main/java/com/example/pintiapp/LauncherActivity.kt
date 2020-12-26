@@ -100,7 +100,7 @@ class LauncherActivity : AppCompatActivity() {
             editor.commit()
         } else {
             //You already have the permission, just go ahead.
-            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+//            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
             startApp()
         }
     }
@@ -120,7 +120,7 @@ class LauncherActivity : AppCompatActivity() {
             }
 
             if (allgranted) {
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+//                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
                 startApp()
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
                     || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
@@ -150,7 +150,7 @@ class LauncherActivity : AppCompatActivity() {
         if (sentToSettings) {
             if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
                 //Got Permission
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+//                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
                 startApp()
             }
         }
