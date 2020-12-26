@@ -1,16 +1,14 @@
-package com.example.pintiapp
+package com.example.pintiapp.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Adapters.RecordRecyclerViewAdapter
-import com.example.pintiapp.Models.ProductModel
-import com.example.pintiapp.ViewModels.HomePageViewModel
+import com.example.pintiapp.views.adapters.RecordRecyclerViewAdapter
+import com.example.pintiapp.models.ProductModel
+import com.example.pintiapp.R
 
 class ProductDetailActivity : AppCompatActivity() {
     private lateinit var recyclerviewRecords: RecyclerView
@@ -26,8 +24,8 @@ class ProductDetailActivity : AppCompatActivity() {
         val textViewProductName = findViewById<TextView>(R.id.textViewProductName)
         val imageViewProduct : ImageView = findViewById(R.id.imageViewProduct)
 
-        textViewProductName.text = product.productName
-        imageViewProduct.setImageResource(product.productPictureResource)
+        textViewProductName.text = product.name
+//        imageViewProduct.setImageResource(product.photoURL)
 
         recyclerviewRecords = findViewById(R.id.recyclerviewRecords)
         recyclerviewRecords.layoutManager = LinearLayoutManager(this)

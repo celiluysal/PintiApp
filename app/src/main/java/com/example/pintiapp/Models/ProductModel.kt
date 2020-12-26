@@ -1,12 +1,15 @@
-package com.example.pintiapp.Models
+package com.example.pintiapp.models
 
-import android.media.Image
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ProductModel(
-        val productName: String,
-        val productBrand: String,
-        val productPictureResource: Int,
-        val recordCount: Int,
-        val recordList: List<RecordModel>
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("brand")
+    val brand: String,
+    @SerializedName("photoURL")
+    val photoURL: String,
+    @SerializedName("Records")
+    val recordList: List<RecordModel>
 ) : Serializable

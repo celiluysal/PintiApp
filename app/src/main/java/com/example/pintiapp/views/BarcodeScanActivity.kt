@@ -1,20 +1,11 @@
-package com.example.pintiapp
+package com.example.pintiapp.views
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import com.example.pintiapp.R
 import com.google.zxing.Result
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {

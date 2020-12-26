@@ -1,16 +1,17 @@
-package com.example.pintiapp.Adapters
+package com.example.pintiapp.views.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Models.MarketModel
+import com.example.pintiapp.models.MarketModel
 import com.example.pintiapp.R
 
 class MarketRecyclerViewAdapter(
         val marketList: List<MarketModel>,
-        var clickListener: OnMarketItemClickListener):
+        var clickListener: OnMarketItemClickListener
+):
         RecyclerView.Adapter<MarketRecyclerViewAdapter.MarketViewHolder>() {
 
     class MarketViewHolder(container: ViewGroup): RecyclerView.ViewHolder(

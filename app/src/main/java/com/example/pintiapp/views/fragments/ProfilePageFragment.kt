@@ -1,4 +1,4 @@
-package com.example.pintiapp.Fragments
+package com.example.pintiapp.views.fragments
 
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
@@ -11,10 +11,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.pintiapp.LoginActivity
-import com.example.pintiapp.ViewModels.ProfilePageViewModel
+import com.example.pintiapp.views.LoginActivity
+import com.example.pintiapp.viewModels.ProfilePageViewModel
 import com.example.pintiapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

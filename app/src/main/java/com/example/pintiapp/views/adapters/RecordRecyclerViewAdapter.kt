@@ -1,11 +1,11 @@
-package com.example.pintiapp.Adapters
+package com.example.pintiapp.views.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Models.RecordModel
+import com.example.pintiapp.models.RecordModel
 import com.example.pintiapp.R
 
 class RecordRecyclerViewAdapter (val recordList: List<RecordModel>): RecyclerView.Adapter<RecordRecyclerViewAdapter.RecordViewHolder>() {

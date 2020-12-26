@@ -1,23 +1,24 @@
-package com.example.pintiapp.Fragments
+package com.example.pintiapp.views.fragments
 
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Adapters.ProductRecyclerViewAdapter
-import com.example.pintiapp.Models.ProductModel
-import com.example.pintiapp.Models.RecordModel
-import com.example.pintiapp.ProductDetailActivity
-import com.example.pintiapp.ViewModels.HomePageViewModel
+import com.example.pintiapp.views.adapters.ProductRecyclerViewAdapter
+import com.example.pintiapp.models.ProductModel
+import com.example.pintiapp.models.RecordModel
+import com.example.pintiapp.views.ProductDetailActivity
+import com.example.pintiapp.viewModels.HomePageViewModel
 import com.example.pintiapp.R
 
 class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemClickListener {
@@ -28,6 +29,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
     private lateinit var viewModel: HomePageViewModel
     private lateinit var recyclerviewProducts: RecyclerView
+    private lateinit var productRecyclerViewAdapter: ProductRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,10 +37,15 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
         setToolbar()
 
+
+
+
+
         recyclerviewProducts = rootView.findViewById(R.id.recyclerviewProducts)
         recyclerviewProducts.layoutManager = GridLayoutManager(activity, 2)
 //        homeRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerviewProducts.adapter = ProductRecyclerViewAdapter(createProductList(), this)
+        productRecyclerViewAdapter = ProductRecyclerViewAdapter(arrayListOf(),this)
+        recyclerviewProducts.adapter = productRecyclerViewAdapter
         return rootView
     }
 
@@ -47,14 +54,27 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
         super.onViewCreated(view, savedInstanceState)
 
 
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
+        viewModel.refresh()
+
+//        observeViewModel()
 
         // TODO: Use the ViewModel
     }
+
+//    private fun observeViewModel() {
+//        viewModel.products.observe(viewLifecycleOwner, Observer { products ->
+//            products?.let {
+//                productRecyclerViewAdapter.updateProducts(it)
+//                Log.e("fdg", "observe prducts")
+//            }
+//        })
+//    }
 
 
     private fun setToolbar(){
@@ -70,7 +90,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
     override fun onProductCardClick(item: ProductModel, position: Int) {
 
-        Toast.makeText(activity, item.productName.toString() , Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, item.name.toString() , Toast.LENGTH_SHORT).show()
         activity?.let{
             val intent = Intent (it, ProductDetailActivity::class.java)
             intent.putExtra("product", item)
@@ -78,8 +98,8 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
         }
 
     }
-
-    private fun createProductList(): List<ProductModel>{
+/*
+    private fun createProductList(): ArrayList<ProductModel>{
         val record1 = RecordModel(
             "A101",
             "Kemalpaşa mahallesi",
@@ -143,7 +163,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
             record_list4.size,
             record_list4
         )
-        return listOf(luppo1,luppo2,luppo3,luppo4,luppo1,luppo2,luppo3,luppo4)
+        return arrayListOf(luppo1,luppo2,luppo3,luppo4,luppo1,luppo2,luppo3,luppo4)
 
     }
 
@@ -172,5 +192,5 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
         return listOf(record1,record2)
     }
-
+*/
 }

@@ -1,4 +1,4 @@
-package com.example.pintiapp.ViewModels
+package com.example.pintiapp.viewModels
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.pintiapp.Fragments
+package com.example.pintiapp.views.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,11 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Adapters.CategoryRecyclerViewAdapter
-import com.example.pintiapp.Adapters.ProductRecyclerViewAdapter
-import com.example.pintiapp.Models.CategoryModel
+import com.example.pintiapp.views.adapters.CategoryRecyclerViewAdapter
+import com.example.pintiapp.models.CategoryModel
 import com.example.pintiapp.R
-import com.example.pintiapp.ViewModels.CategoriesTabViewModel
+import com.example.pintiapp.viewModels.CategoriesTabViewModel
 
 class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategoryItemClickListener {
 

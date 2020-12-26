@@ -1,4 +1,4 @@
-package com.example.pintiapp.Adapters
+package com.example.pintiapp.views.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,11 +7,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Models.ProductModel
+import com.example.pintiapp.models.ProductModel
 import com.example.pintiapp.R
+import com.example.pintiapp.utils.getProgressDrawable
+import com.example.pintiapp.utils.loadImage
 
-class ProductRecyclerViewAdapter(val productList: List<ProductModel>,
-                                 var clickListener: OnProductItemClickListener):
+class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
+                                 var clickListener: OnProductItemClickListener
+):
         RecyclerView.Adapter<ProductRecyclerViewAdapter.HomeViewHolder>() {
 
     class HomeViewHolder(container: ViewGroup): RecyclerView.ViewHolder(
@@ -38,31 +41,26 @@ class ProductRecyclerViewAdapter(val productList: List<ProductModel>,
         val textViewShop3 : TextView = itemView.findViewById(R.id.textViewShop3)
         val textViewShopPrice3 : TextView = itemView.findViewById(R.id.textViewShopPrice3)
 
-
-
-
-//        fun init(item: ProductModel, action: OnProductItemClickListener) {
-//
-//        }
-
         fun bind(productModel: ProductModel, action: OnProductItemClickListener){
             counter_layout.visibility = RelativeLayout.INVISIBLE
             cardViewShop1.visibility = CardView.INVISIBLE
             cardViewShop2.visibility = CardView.INVISIBLE
             cardViewShop3.visibility = CardView.INVISIBLE
 
-            imageViewProduct.setImageResource(productModel.productPictureResource)
+            imageViewProduct.loadImage(productModel.photoURL, getProgressDrawable(itemView.context))
 
-            if (productModel.productName.length > 15){
-                val displayProductName = productModel.productName.substring(0,15) + "..."
+            if (productModel.name.length > 15){
+                val displayProductName = productModel.name.substring(0,15) + "..."
                 textViewProductName.text = displayProductName
             }
             else
-                textViewProductName.text = productModel.productName
+                textViewProductName.text = productModel.name
 
-            if (productModel.recordCount > 3){
+            val recordCount = productModel.recordList.size
+
+            if (recordCount > 3){
                 textViewCounter.text = (
-                        productModel.recordCount.toString() + " " +
+                        recordCount.toString() + " " +
                                 itemView.resources.getString(R.string.price))
                 counter_layout.visibility = RelativeLayout.VISIBLE
             }
@@ -106,6 +104,11 @@ class ProductRecyclerViewAdapter(val productList: List<ProductModel>,
         }
     }
 
+    fun updateProducts(newProducts: List<ProductModel>) {
+        productList.clear()
+        productList.addAll(newProducts)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
 

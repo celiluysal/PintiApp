@@ -1,4 +1,4 @@
-package com.example.pintiapp.Models
+package com.example.pintiapp.models
 
 import java.io.Serializable
 

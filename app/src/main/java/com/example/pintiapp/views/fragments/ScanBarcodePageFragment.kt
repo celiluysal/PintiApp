@@ -1,4 +1,4 @@
- package com.example.pintiapp.Fragments
+ package com.example.pintiapp.views.fragments
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,15 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.pintiapp.AddProductActivity
-import com.example.pintiapp.BarcodeScanActivity
-import com.example.pintiapp.ViewModels.AddProductPageViewModel
+import com.example.pintiapp.views.BarcodeScanActivity
+import com.example.pintiapp.viewModels.AddProductPageViewModel
 import com.example.pintiapp.R
 
  class ScanBarcodePageFragment : Fragment() {

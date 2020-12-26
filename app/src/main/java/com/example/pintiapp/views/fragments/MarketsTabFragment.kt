@@ -1,4 +1,4 @@
-package com.example.pintiapp.Fragments
+package com.example.pintiapp.views.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.Adapters.CategoryRecyclerViewAdapter
-import com.example.pintiapp.Adapters.MarketRecyclerViewAdapter
-import com.example.pintiapp.Models.CategoryModel
-import com.example.pintiapp.Models.MarketModel
+import com.example.pintiapp.views.adapters.MarketRecyclerViewAdapter
+import com.example.pintiapp.models.MarketModel
 import com.example.pintiapp.R
-import com.example.pintiapp.ViewModels.MarketsTabViewModel
+import com.example.pintiapp.viewModels.MarketsTabViewModel
 
 class MarketsTabFragment : Fragment(), MarketRecyclerViewAdapter.OnMarketItemClickListener {
 

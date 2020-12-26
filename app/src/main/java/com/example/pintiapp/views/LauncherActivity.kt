@@ -1,4 +1,4 @@
-package com.example.pintiapp
+package com.example.pintiapp.views
 
 import android.content.Context
 import android.content.Intent
@@ -13,8 +13,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class LauncherActivity : AppCompatActivity() {
     private var permissionsRequired = arrayOf(

@@ -1,14 +1,10 @@
-package com.example.pintiapp
+package com.example.pintiapp.views
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -17,12 +13,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
+import com.example.pintiapp.R
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.material.textfield.TextInputEditText
