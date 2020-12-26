@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +41,7 @@ class ProfilePageFragment : Fragment() {
         val textView3 = rootView.findViewById<TextView>(R.id.textView3)
         textView3.text = user?.email.toString()
 
-        set_toolbar()
+        setToolbar()
 
         val buttonLogout = rootView.findViewById<Button>(R.id.buttonLogout)
         buttonLogout.setOnClickListener {
@@ -65,18 +66,14 @@ class ProfilePageFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    private fun set_toolbar(){
+    private fun setToolbar(){
         val m = (activity as AppCompatActivity)
-        val main_tb = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val tb1 = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_1)
+        val toolbar = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = m.findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = m.findViewById<ImageView>(R.id.imageViewBack)
 
-        tb1.visibility = Toolbar.INVISIBLE
-        main_tb.visibility = Toolbar.VISIBLE
-        m.setSupportActionBar(main_tb)
-        m.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        main_tb.setNavigationOnClickListener(View.OnClickListener {
-            m.onBackPressed()
-        })
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.INVISIBLE
     }
 
 }

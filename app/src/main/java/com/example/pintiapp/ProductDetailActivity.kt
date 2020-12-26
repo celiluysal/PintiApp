@@ -19,9 +19,10 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
+        setToolbar()
+
         val product = intent.extras?.get("product") as ProductModel
 
-        val main_tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
         val textViewProductName = findViewById<TextView>(R.id.textViewProductName)
         val imageViewProduct : ImageView = findViewById(R.id.imageViewProduct)
 
@@ -32,12 +33,20 @@ class ProductDetailActivity : AppCompatActivity() {
         recyclerviewRecords.layoutManager = LinearLayoutManager(this)
         recyclerviewRecords.adapter = RecordRecyclerViewAdapter(product.recordList)
 
+    }
 
-        setSupportActionBar(main_tb)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        main_tb.setNavigationOnClickListener(View.OnClickListener {
+    private fun setToolbar(){
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+
+        setSupportActionBar(toolbar)
+
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.VISIBLE
+
+        imageViewBack.setOnClickListener {
             onBackPressed()
-        })
-
+        }
     }
 }

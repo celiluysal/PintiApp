@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.common.util.DataUtils
@@ -29,6 +30,8 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        setToolbar()
 
         auth = Firebase.auth
 
@@ -124,5 +127,16 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Oturum açılamadı.",
                     Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setToolbar(){
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
+        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
+        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+
+        setSupportActionBar(toolbar)
+
+        imageViewSearch.visibility = ImageView.INVISIBLE
+        imageViewBack.visibility = ImageView.INVISIBLE
     }
 }

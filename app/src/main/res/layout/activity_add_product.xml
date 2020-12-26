@@ -22,163 +22,272 @@
         android:fillViewport="true"
         android:layout_below="@id/toolbar_layout">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar_layout"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:layout_marginVertical="16dp">
+                android:layout_marginTop="@dimen/grid_space"
+                android:paddingHorizontal="@dimen/grid_space">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputProductName"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextProductName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_person"
-                        android:drawablePadding="8dp"
-                        android:hint="@string/product_name"
-                        android:inputType="text"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputProductBrand"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextProductBrand"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_person"
-                        android:drawablePadding="8dp"
-                        android:hint="@string/brand"
-                        android:inputType="text"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp">
-                </Spinner>
-
-
-
-
-
-
-                <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLocationTitle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/imageViewLocation"
-                    android:layout_marginStart="24dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextLocationTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:drawableStart="@drawable/ic_person"
-                        android:drawablePadding="8dp"
-                        android:hint="@string/location"
-                        android:inputType="text"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/imageViewLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp"
-                android:layout_alignBottom="@+id/textInputLocationTitle"
-                android:layout_marginBottom="2dp"
-                app:srcCompat="@drawable/ic_location"
-                tools:ignore="VectorDrawableCompat" />
-        </RelativeLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputProductPrice"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextProductPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_person"
-                        android:drawablePadding="8dp"
-                        android:hint="@string/price"
-                        android:inputType="numberDecimal"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <Button
-                    android:id="@+id/buttonSave"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAddPhoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:paddingVertical="8dp"
-                    android:text="@string/save"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"/>
+                    app:cardCornerRadius="4dp"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingVertical="@dimen/grid_space"
+                        android:padding="@dimen/grid_space">
+
+                        <ImageView
+                            android:id="@+id/imageViewAddPhoto"
+                            android:layout_width="180dp"
+                            android:layout_height="120dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im_add_product"
+                            android:contentDescription="@string/add_photo" />
+
+                        <TextView
+                            android:id="@+id/textViewAddPhoto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_below="@id/imageViewAddPhoto"
+                            android:text="@string/add_photo"
+                            android:layout_centerHorizontal="true"
+                            android:maxLines="1"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewAddPricetag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/grid_space"
+                    android:layout_gravity="center_horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingVertical="@dimen/grid_space"
+                        android:padding="@dimen/grid_space">
+
+                        <ImageView
+                            android:id="@+id/imageViewAddPricetag"
+                            android:layout_width="180dp"
+                            android:layout_height="120dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/im_add_pricetag"
+                            android:contentDescription="@string/scan_pricetag" />
+
+                        <TextView
+                            android:id="@+id/textViewAddPricetag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_below="@id/imageViewAddPricetag"
+                            android:text="@string/scan_barcode"
+                            android:layout_centerHorizontal="true"
+                            android:maxLines="1"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/grid_space"
+                android:layout_marginTop="@dimen/grid_space"
+                android:layout_marginBottom="@dimen/grid_space"
+                app:cardCornerRadius="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    >
 
-                    <TextView
-                        android:id="@+id/textViewAccountQuestion"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputProductName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textInputEditTextProductName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/product_name"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputProductBrand"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textInputEditTextProductBrand"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/brand"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="@string/login_question"
-                        android:textSize="16sp" />
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
 
-                    <TextView
-                        android:id="@+id/textViewLogin"
+                        <Spinner
+                            android:id="@+id/spinnerCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_alignBottom="@id/textInputSpinnerCategory"
+                            android:layout_marginBottom="5dp"/>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputSpinnerCategory"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textInputEditTextSpinnerCategory"
+                                android:enabled="false"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_person" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/login"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="16sp" />
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
+
+                        <Spinner
+                            android:id="@+id/spinnerMarket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_alignBottom="@id/textInputSpinnerMarket"
+                            android:layout_marginBottom="5dp"/>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputSpinnerMarket"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textInputEditTextSpinnerMarket"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:drawableStart="@drawable/ic_person" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLocationTitle"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textInputEditTextLocationTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="8dp"
+                            android:enabled="false"
+                            android:hint="@string/location"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputProductPrice"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textInputEditTextProductPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/price"
+                            android:inputType="numberDecimal"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/buttonSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/save"
+                        android:textAllCaps="false"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"/>
                 </LinearLayout>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

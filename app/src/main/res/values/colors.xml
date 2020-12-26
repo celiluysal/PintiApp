@@ -27,13 +27,20 @@
     <color name="toolbar_night">#1F1F1F</color>
     <color name="statusbar_night">@color/black</color>
 
+    <color name="border_gray">#1F000000</color>
+
+    <color name="search_bar_background">#1A000000</color>
+    <color name="search_bar_background_night">#0DFFFFFF</color>
+
 
     <color name="a">?attr/colorSurface</color>
     <attr name="price_list_item1"/>
     <attr name="price_list_item2"/>
     <attr name="bottom_nav_bar_background"/>
     <attr name="toolbar_background"/>
-    <attr name="toolbar_logo_tint"/>
+    <attr name="toolbar_logo_tint">#F59309</attr>
+    <attr name="toolbar_icon_tint"/>
+    <attr name="search_bar_background"/>
 
     <color name="bottom_nav_bar_item_selected">@color/orange</color>
     <color name="bottom_nav_bar_item_default">#8D8D8D</color>
@@ -53,6 +60,16 @@
         <item name="cornerSizeTopLeft">168dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">16dp</item>
+    </style>
+
+    <style name="spinner_style" parent="Widget.AppCompat.Spinner">
+        <item name="borderColor">@color/black</item>
+        <item name="borderWidth">1dp</item>
+    </style>
+
+    <style name="bottom_nav_bar_style"
+        parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="fontFamily">?attr/fontFamily</item>
     </style>
 
 

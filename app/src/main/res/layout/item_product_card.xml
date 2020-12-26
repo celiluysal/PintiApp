@@ -35,6 +35,7 @@
                 android:id="@+id/counter_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/textViewProductName"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -91,7 +92,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/textViewShop1Price"
+                            android:id="@+id/textViewShopPrice1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -124,7 +125,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/textViewShop1Price2"
+                            android:id="@+id/textViewShopPrice2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -157,7 +158,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/textViewShop1Price3"
+                            android:id="@+id/textViewShopPrice3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
