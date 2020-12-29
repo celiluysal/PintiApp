@@ -7,8 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.RecordRecyclerViewAdapter
-import com.example.pintiapp.models.ProductModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Product
+import com.example.pintiapp.utils.getProgressDrawable
+import com.example.pintiapp.utils.loadImage
 
 class ProductDetailActivity : AppCompatActivity() {
     private lateinit var recyclerviewRecords: RecyclerView
@@ -19,7 +21,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         setToolbar()
 
-        val product = intent.extras?.get("product") as ProductModel
+        val product = intent.extras?.get("product") as Product
 
         val textViewProductName = findViewById<TextView>(R.id.textViewProductName)
         val imageViewProduct : ImageView = findViewById(R.id.imageViewProduct)
@@ -27,9 +29,11 @@ class ProductDetailActivity : AppCompatActivity() {
         textViewProductName.text = product.name
 //        imageViewProduct.setImageResource(product.photoURL)
 
+        imageViewProduct.loadImage(product.photoURL, getProgressDrawable(this))
+
         recyclerviewRecords = findViewById(R.id.recyclerviewRecords)
         recyclerviewRecords.layoutManager = LinearLayoutManager(this)
-        recyclerviewRecords.adapter = RecordRecyclerViewAdapter(product.recordList)
+        recyclerviewRecords.adapter = RecordRecyclerViewAdapter(product.records)
 
     }
 

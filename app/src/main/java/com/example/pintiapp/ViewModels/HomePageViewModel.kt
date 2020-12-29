@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pintiapp.di.DaggerApiComponent
-import com.example.pintiapp.models.Products
+import com.example.pintiapp.models.Product
 import com.example.pintiapp.service.PintiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -23,8 +23,8 @@ class HomePageViewModel : ViewModel() {
 
     private val disposible = CompositeDisposable()
 
-    val products = MutableLiveData<Products>()
-    val productsLoadError = MutableLiveData<Boolean>()
+    val products = MutableLiveData<List<Product>>()
+    val loadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
 
     fun refresh() {
@@ -32,28 +32,32 @@ class HomePageViewModel : ViewModel() {
     }
 
     private fun fetchProducts() {
-        Log.e("fbg","fetch")
         loading.value = true
         disposible.add(
             pintiService.getProducts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object: DisposableSingleObserver<Products>() {
-                    override fun onSuccess(value: Products?) {
-                        Log.e("fbg","on success ---------")
+                .subscribeWith(object: DisposableSingleObserver<List<Product>>() {
+                    override fun onSuccess(value: List<Product>?) {
+                        value.let { product ->
+                            for(v in value!!) {
+                                v.records = v.records.sortedBy { it.price }
+                            }
+                            products.value = product
+                            loadError.value = false
+                            loading.value = false
+                        }
 
-                        products.value = value
-                        Log.e("fbg",value!!.products[0]!!.name!!.toString())
-
-                        productsLoadError.value = false
-                        loading.value = false
+                        if (value.isNullOrEmpty()){
+                            loadError.value = true
+                            loading.value = false
+                        }
                     }
 
                     override fun onError(e: Throwable?) {
-                        Log.e("fbg","on error ---------")
-                        Log.e("fbg", e.toString())
+                        Log.e("api error: ", e.toString())
 
-                        productsLoadError.value = true
+                        loadError.value = true
                         loading.value = false
                     }
                 })

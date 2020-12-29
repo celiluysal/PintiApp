@@ -7,12 +7,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.models.ProductModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Product
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
 
-class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
+class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
                                  var clickListener: OnProductItemClickListener
 ):
         RecyclerView.Adapter<ProductRecyclerViewAdapter.HomeViewHolder>() {
@@ -41,22 +41,22 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
         val textViewShop3 : TextView = itemView.findViewById(R.id.textViewShop3)
         val textViewShopPrice3 : TextView = itemView.findViewById(R.id.textViewShopPrice3)
 
-        fun bind(productModel: ProductModel, action: OnProductItemClickListener){
+        fun bind(product: Product, action: OnProductItemClickListener){
             counter_layout.visibility = RelativeLayout.INVISIBLE
             cardViewShop1.visibility = CardView.INVISIBLE
             cardViewShop2.visibility = CardView.INVISIBLE
             cardViewShop3.visibility = CardView.INVISIBLE
 
-            imageViewProduct.loadImage(productModel.photoURL, getProgressDrawable(itemView.context))
+            imageViewProduct.loadImage(product.photoURL, getProgressDrawable(itemView.context))
 
-            if (productModel.name.length > 15){
-                val displayProductName = productModel.name.substring(0,15) + "..."
+            if (product.name.length > 15){
+                val displayProductName = product.name.substring(0,15) + "..."
                 textViewProductName.text = displayProductName
             }
             else
-                textViewProductName.text = productModel.name
+                textViewProductName.text = product.name
 
-            val recordCount = productModel.recordList.size
+            val recordCount = product.records.size
 
             if (recordCount > 3){
                 textViewCounter.text = (
@@ -67,14 +67,14 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
             else
                 counter_layout.visibility = RelativeLayout.INVISIBLE
 
-            if (productModel.recordList.isNotEmpty()) {
-                textViewShop1.text = productModel.recordList[0].marketName
-                textViewShopPrice1.text = productModel.recordList[0].productPrice + "₺"
+            if (product.records.isNotEmpty()) {
+                textViewShop1.text = product.records[0].shopId
+                textViewShopPrice1.text = product.records[0].price.toString() + "₺"
                 cardViewShop1.visibility = CardView.VISIBLE
 
-                if (productModel.recordList.size > 1) {
-                    textViewShop2.text = productModel.recordList[1].marketName
-                    textViewShopPrice2.text = productModel.recordList[1].productPrice + "₺"
+                if (product.records.size > 1) {
+                    textViewShop2.text = product.records[1].shopId
+                    textViewShopPrice2.text = product.records[1].price.toString() + "₺"
                     cardViewShop2.visibility = CardView.VISIBLE
                 }
                 else
@@ -82,9 +82,9 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
 
 
 
-                if (productModel.recordList.size > 2) {
-                    textViewShop3.text = productModel.recordList[2].marketName
-                    textViewShopPrice3.text = productModel.recordList[2].productPrice + "₺"
+                if (product.records.size > 2) {
+                    textViewShop3.text = product.records[2].shopId
+                    textViewShopPrice3.text = product.records[2].price.toString() + "₺"
                     cardViewShop3.visibility = CardView.VISIBLE
                 }
                 else
@@ -98,13 +98,13 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
 
 
             itemView.setOnClickListener {
-                action.onProductCardClick(productModel, adapterPosition)
+                action.onProductCardClick(product, adapterPosition)
             }
 
         }
     }
 
-    fun updateProducts(newProducts: List<ProductModel>) {
+    fun updateProducts(newProducts: List<Product>) {
         productList.clear()
         productList.addAll(newProducts)
         notifyDataSetChanged()
@@ -124,7 +124,7 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<ProductModel>,
     }
 
     interface OnProductItemClickListener{
-        fun onProductCardClick(item: ProductModel, position: Int)
+        fun onProductCardClick(item: Product, position: Int)
     }
 
 

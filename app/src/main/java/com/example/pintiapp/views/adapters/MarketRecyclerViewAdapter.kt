@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.models.MarketModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Shop
+import com.example.pintiapp.utils.getProgressDrawable
+import com.example.pintiapp.utils.loadImage
 
 class MarketRecyclerViewAdapter(
-        val marketList: List<MarketModel>,
+        val marketList: ArrayList<Shop>,
         var clickListener: OnMarketItemClickListener
 ):
         RecyclerView.Adapter<MarketRecyclerViewAdapter.MarketViewHolder>() {
@@ -24,20 +26,23 @@ class MarketRecyclerViewAdapter(
 
         val imageViewContent : ImageView = itemView.findViewById(R.id.imageViewContent)
         val textViewContentName : TextView = itemView.findViewById(R.id.textViewContentName)
-        val textViewCounter : TextView = itemView.findViewById(R.id.textViewCounter)
 
-        fun bind(marketModel: MarketModel, action: OnMarketItemClickListener){
+        fun bind(shop: Shop, action: OnMarketItemClickListener){
 
-            imageViewContent.setImageResource(marketModel.marketPictureResource)
-            textViewContentName.text = marketModel.marketName
-            textViewCounter.text = marketModel.productCount.toString() + " Ürün"
-            textViewCounter.textSize = 10.0F
+            imageViewContent.loadImage(shop.photoURL, getProgressDrawable(itemView.context))
+            textViewContentName.text = shop.shopName
 
             itemView.setOnClickListener {
-                action.onMarketCardClick(marketModel, adapterPosition)
+                action.onMarketCardClick(shop, adapterPosition)
             }
 
         }
+    }
+
+    fun updateShops(newShops: List<Shop>) {
+        marketList.clear()
+        marketList.addAll(newShops)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
@@ -53,6 +58,6 @@ class MarketRecyclerViewAdapter(
     }
 
     interface OnMarketItemClickListener{
-        fun onMarketCardClick(item: MarketModel, position: Int)
+        fun onMarketCardClick(item: Shop, position: Int)
     }
 }

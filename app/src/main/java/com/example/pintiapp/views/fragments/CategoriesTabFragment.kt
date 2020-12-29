@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.CategoryRecyclerViewAdapter
 import com.example.pintiapp.models.CategoryModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Category
 import com.example.pintiapp.viewModels.CategoriesTabViewModel
 
 class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategoryItemClickListener {
@@ -22,6 +24,7 @@ class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategory
 
     private lateinit var viewModel: CategoriesTabViewModel
     private lateinit var recyclerViewCategory: RecyclerView
+    private lateinit var categoryRecyclerViewAdapter: CategoryRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,52 +32,31 @@ class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategory
 
         recyclerViewCategory = rootView.findViewById(R.id.recyclerViewCategory)
         recyclerViewCategory.layoutManager = GridLayoutManager(activity, 3)
-        recyclerViewCategory.adapter = CategoryRecyclerViewAdapter(createCategoryList(), this)
+        categoryRecyclerViewAdapter = CategoryRecyclerViewAdapter(arrayListOf(),this)
+        recyclerViewCategory.adapter = categoryRecyclerViewAdapter
 
         return rootView
-    }
-
-    private fun createCategoryList(): List<CategoryModel> {
-        val category1 = CategoryModel(
-                "İçecekler",
-                R.drawable.im_category,
-                21
-        )
-
-        val category2 = CategoryModel(
-                "İçecekler",
-                R.drawable.im_category,
-                21
-        )
-
-        val category3 = CategoryModel(
-                "İçecekler",
-                R.drawable.im_category,
-                21
-        )
-
-        val category4 = CategoryModel(
-                "İçecekler",
-                R.drawable.im_category,
-                21
-        )
-        val category5 = CategoryModel(
-                "İçecekler",
-                R.drawable.im_category,
-                21
-        )
-
-        return listOf(category1, category2, category4, category3, category5)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CategoriesTabViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.refresh()
+
+        observeViewModel()
     }
 
-    override fun onCategoryCardClick(item: CategoryModel, position: Int) {
-        Toast.makeText(activity, item.categoryName, Toast.LENGTH_SHORT).show()
+    private fun observeViewModel() {
+        viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
+            categories.let { categories ->
+                categoryRecyclerViewAdapter.updateCategories(categories)
+            }
+
+        })
+    }
+
+    override fun onCategoryCardClick(item: Category, position: Int) {
+        Toast.makeText(activity,item.categoryName,Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.models.RecordModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Record
 
-class RecordRecyclerViewAdapter (val recordList: List<RecordModel>): RecyclerView.Adapter<RecordRecyclerViewAdapter.RecordViewHolder>() {
+class RecordRecyclerViewAdapter (val recordList: List<Record>): RecyclerView.Adapter<RecordRecyclerViewAdapter.RecordViewHolder>() {
 
     class RecordViewHolder(container: ViewGroup) : RecyclerView.ViewHolder(
             LayoutInflater.from(container.context).inflate(
@@ -26,12 +26,12 @@ class RecordRecyclerViewAdapter (val recordList: List<RecordModel>): RecyclerVie
 
 //
 
-        fun bind(recordModel: RecordModel) {
-            textViewMarketName.text = recordModel.marketName
-            textViewLocationTitle.text = recordModel.locationTitle
-            textViewRecordDate.text = recordModel.recordDate
-            textViewRecordOwner.text = recordModel.recordOwner
-            textViewPrice.text = recordModel.productPrice + "₺"
+        fun bind(record: Record) {
+            textViewMarketName.text = record.shopId
+            textViewLocationTitle.text = record.locationTitle
+            textViewRecordDate.text = record.recordDate
+            textViewRecordOwner.text = record.ownerName
+            textViewPrice.text = record.price.toString() + "₺"
 
         }
     }
@@ -51,7 +51,7 @@ class RecordRecyclerViewAdapter (val recordList: List<RecordModel>): RecyclerVie
     }
 
     interface OnMarketItemClickListener {
-        fun onMarketCardClick(item: RecordModel, position: Int)
+        fun onMarketCardClick(item: Record, position: Int)
     }
 
 }

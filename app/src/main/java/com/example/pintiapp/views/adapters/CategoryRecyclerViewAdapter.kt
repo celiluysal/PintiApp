@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pintiapp.models.CategoryModel
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Category
+import com.example.pintiapp.utils.getProgressDrawable
+import com.example.pintiapp.utils.loadImage
 
 class CategoryRecyclerViewAdapter(
-        val categoryList: List<CategoryModel>,
+        val categoryList: ArrayList<Category>,
         var clickListener: OnCategoryItemClickListener
 ):
         RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
@@ -24,22 +26,24 @@ class CategoryRecyclerViewAdapter(
 
         val imageViewContent : ImageView = itemView.findViewById(R.id.imageViewContent)
         val textViewContentName : TextView = itemView.findViewById(R.id.textViewContentName)
-        val textViewCounter : TextView = itemView.findViewById(R.id.textViewCounter)
 
-        fun bind(categoryModel: CategoryModel, action: OnCategoryItemClickListener){
+        fun bind(category: Category, action: OnCategoryItemClickListener){
 
-            imageViewContent.setImageResource(categoryModel.categoryPictureResource)
-            textViewContentName.text = categoryModel.categoryName
-            textViewCounter.text = categoryModel.productCount.toString() + " Ürün"
-            textViewCounter.textSize = 10.0F
+            imageViewContent.loadImage(category.photoURL, getProgressDrawable(itemView.context))
+            textViewContentName.text = category.categoryName
 
             itemView.setOnClickListener {
-                action.onCategoryCardClick(categoryModel, adapterPosition)
+                action.onCategoryCardClick(category, adapterPosition)
             }
 
         }
     }
 
+    fun updateCategories(newCategories: List<Category>) {
+        categoryList.clear()
+        categoryList.addAll(newCategories)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
 
@@ -55,6 +59,6 @@ class CategoryRecyclerViewAdapter(
     }
 
     interface OnCategoryItemClickListener{
-        fun onCategoryCardClick(item: CategoryModel, position: Int)
+        fun onCategoryCardClick(item: Category, position: Int)
     }
         }
