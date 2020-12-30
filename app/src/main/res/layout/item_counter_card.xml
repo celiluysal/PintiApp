@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginVertical="2dp"
-        android:text="5 Fiyat"
+        android:text="@string/example_5_price"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold" />

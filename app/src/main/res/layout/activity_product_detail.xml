@@ -48,14 +48,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/luppo4" />
+                    app:srcCompat="@drawable/im_default" />
 
                 <TextView
                     android:id="@+id/textViewProductName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Luppo"
+                    android:text="@string/product_name"
                     android:gravity="center_horizontal"
                     android:textSize="34sp"
                     android:textStyle="bold"
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Ülker - Çikolata &amp; Kek"
+                    android:text="@string/brand_and_category"
                     android:gravity="center_horizontal"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -5,6 +5,7 @@ import com.example.pintiapp.models.Product
 import com.example.pintiapp.models.Shop
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface PintiApi {
 
@@ -16,4 +17,16 @@ interface PintiApi {
 
     @GET("fetch-categories")
     fun fetchCategories(): Single<List<Category>>
+
+    @GET("fetch-products-by-shop")
+    fun fetchProductsByShopId(
+        @Query("shopid")
+        shopId: String
+    ): Single<List<Product>>
+
+    @GET("fetch-products-by-category")
+    fun fetchProductsByCategoryId(
+        @Query("categoryid")
+        categoryId: String
+    ): Single<List<Product>>
 }

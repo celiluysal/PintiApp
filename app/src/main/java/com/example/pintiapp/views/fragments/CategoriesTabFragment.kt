@@ -1,5 +1,6 @@
 package com.example.pintiapp.views.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.CategoryRecyclerViewAdapter
@@ -15,6 +17,10 @@ import com.example.pintiapp.models.CategoryModel
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Category
 import com.example.pintiapp.viewModels.CategoriesTabViewModel
+import com.example.pintiapp.viewModels.ProductByShopViewModel
+import com.example.pintiapp.views.ProductByCategoryActivity
+import com.example.pintiapp.views.ProductByShopActivity
+import com.example.pintiapp.views.ProductDetailActivity
 
 class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategoryItemClickListener {
 
@@ -56,7 +62,13 @@ class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategory
     }
 
     override fun onCategoryCardClick(item: Category, position: Int) {
-        Toast.makeText(activity,item.categoryName,Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, item.categoryName+ " " + item.categoryId, Toast.LENGTH_SHORT).show()
+        activity?.let {
+            val intent = Intent(it, ProductByCategoryActivity::class.java)
+            intent.putExtra("categoryId", item.categoryId)
+            it.startActivity(intent)
+        }
+
     }
 
 }

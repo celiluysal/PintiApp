@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pintiapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -21,7 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PintiApp">
-        <activity android:name=".views.SearchActivity"></activity>
+        <activity android:name=".views.ProductByShopActivity"></activity>
+        <activity android:name=".views.ProductByCategoryActivity" />
+        <activity
+            android:name=".views.MainActivity2"
+            android:label="@string/title_activity_main2" />
+        <activity android:name=".views.SearchActivity" />
         <activity android:name=".views.BarcodeScanActivity" />
         <activity android:name=".views.AddProductActivity" />
         <activity

@@ -19,5 +19,6 @@
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.example.pintiapp.views.fragments.ProfilePageFragment"
+        android:label="profile_page"
         tools:layout="@layout/profile_page_fragment" />
 </navigation>

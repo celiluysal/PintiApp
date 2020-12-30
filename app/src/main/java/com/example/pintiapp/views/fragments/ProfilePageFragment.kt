@@ -12,6 +12,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.FragmentNavigator
 import com.example.pintiapp.views.LoginActivity
 import com.example.pintiapp.viewModels.ProfilePageViewModel
 import com.example.pintiapp.R
@@ -63,6 +65,14 @@ class ProfilePageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ProfilePageViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+
     }
 
     private fun setToolbar(){

@@ -1,5 +1,6 @@
 package com.example.pintiapp.views.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.example.pintiapp.models.MarketModel
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Shop
 import com.example.pintiapp.viewModels.MarketsTabViewModel
+import com.example.pintiapp.views.ProductByShopActivity
 
 class MarketsTabFragment : Fragment(), MarketRecyclerViewAdapter.OnMarketItemClickListener {
 
@@ -58,7 +60,12 @@ class MarketsTabFragment : Fragment(), MarketRecyclerViewAdapter.OnMarketItemCli
 
 
     override fun onMarketCardClick(item: Shop, position: Int) {
-        Toast.makeText(activity, item.shopName, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, item.shopName + " " + item.shopId, Toast.LENGTH_SHORT).show()
+        activity?.let {
+            val intent = Intent(it, ProductByShopActivity::class.java)
+            intent.putExtra("shopId", item.shopId)
+            it.startActivity(intent)
+        }
     }
 
 }

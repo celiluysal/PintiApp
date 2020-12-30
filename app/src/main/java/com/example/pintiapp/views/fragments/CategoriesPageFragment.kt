@@ -22,16 +22,18 @@ class CategoriesPageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.categories_page_fragment, container, false)
 
         setToolbar()
+        setTabs(rootView)
 
-        return inflater.inflate(R.layout.categories_page_fragment, container, false)
+        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setTabs()
+
 
 
 
@@ -69,10 +71,10 @@ class CategoriesPageFragment : Fragment() {
         }
     }
 
-    private fun setTabs(){
+    private fun setTabs(rootView: View){
 
-        val viewPager:ViewPager2 = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
-        val tabLayout = (activity as AppCompatActivity).findViewById<TabLayout>(R.id.tablayout)
+        val viewPager:ViewPager2 = rootView.findViewById(R.id.categories_view_pager)
+        val tabLayout = rootView.findViewById<TabLayout>(R.id.tablayout)
 
         viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun createFragment(position: Int): Fragment {

@@ -45,7 +45,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
         setToolbar()
 
-        swipeRefreshLayoutHomeFragment = rootView.findViewById(R.id.swipeRefreshLayoutHomeFragment)
+        swipeRefreshLayoutHomeFragment = rootView.findViewById(R.id.swipeRefreshLayoutShowProduct)
         recyclerviewProducts = rootView.findViewById(R.id.recyclerviewProducts)
         progressBarHomeFragment = rootView.findViewById(R.id.progressBarHomeFragment)
         textViewNotFound = rootView.findViewById(R.id.textViewNotFound)

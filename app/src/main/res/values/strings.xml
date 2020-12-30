@@ -51,4 +51,13 @@
     <string name="product_photo">Ürün fotoğrafı</string>
     <string name="search">Search</string>
     <string name="product_not_found">Ürün bulunamadı</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="brand_and_category">Marka ve Kategori</string>
+    <string name="example_5_price">5 Fiyat</string>
+    <string name="date">Tarih</string>
+    <string name="example_price">5,35₺</string>
+    <string name="shop_name">Market Adı</string>
 </resources>
