@@ -7,21 +7,17 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.pintiapp.views.fragments.HomePageFragment"
-        android:label="home_page_fragment"
         tools:layout="@layout/home_page_fragment" />
     <fragment
         android:id="@+id/categoriesPageFragment"
         android:name="com.example.pintiapp.views.fragments.CategoriesPageFragment"
-        android:label="categories_page_fragment"
         tools:layout="@layout/categories_page_fragment" />
     <fragment
         android:id="@+id/addProductPageFragment"
         android:name="com.example.pintiapp.views.fragments.ScanBarcodePageFragment"
-        android:label="add_product_page_fragment"
         tools:layout="@layout/scan_barcode_page_fragment" />
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.example.pintiapp.views.fragments.ProfilePageFragment"
-        android:label="profile_page_fragment"
         tools:layout="@layout/profile_page_fragment" />
 </navigation>

@@ -1,6 +1,8 @@
 package com.example.pintiapp.di
 
 import com.example.pintiapp.service.PintiService
+import com.example.pintiapp.utils.CategoryStatic
+import com.example.pintiapp.utils.ShopStatic
 import com.example.pintiapp.viewModels.CategoriesTabViewModel
 import com.example.pintiapp.viewModels.HomePageViewModel
 import com.example.pintiapp.viewModels.MarketsTabViewModel
@@ -15,4 +17,6 @@ interface ApiComponent {
     fun inject(viewModel: HomePageViewModel)
     fun inject(viewModel: CategoriesTabViewModel)
     fun inject(viewModel: MarketsTabViewModel)
+    fun inject(staticClass: CategoryStatic)
+    fun inject(staticClass: ShopStatic)
 }

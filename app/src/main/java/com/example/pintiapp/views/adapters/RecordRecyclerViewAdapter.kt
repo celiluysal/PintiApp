@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Record
+import com.example.pintiapp.utils.ShopStatic
 
 class RecordRecyclerViewAdapter (val recordList: List<Record>): RecyclerView.Adapter<RecordRecyclerViewAdapter.RecordViewHolder>() {
 
@@ -27,11 +28,12 @@ class RecordRecyclerViewAdapter (val recordList: List<Record>): RecyclerView.Ada
 //
 
         fun bind(record: Record) {
-            textViewMarketName.text = record.shopId
+            textViewMarketName.text = ShopStatic.shared.getShopName(record.shopId)
             textViewLocationTitle.text = record.locationTitle
             textViewRecordDate.text = record.recordDate
             textViewRecordOwner.text = record.ownerName
-            textViewPrice.text = record.price.toString() + "₺"
+            val price = record.price.toString() + itemView.resources.getString(R.string.price_symbol)
+            textViewPrice.text = price
 
         }
     }

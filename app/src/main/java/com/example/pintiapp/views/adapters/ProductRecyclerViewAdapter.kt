@@ -1,14 +1,18 @@
 package com.example.pintiapp.views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Product
+import com.example.pintiapp.utils.CategoryStatic
+import com.example.pintiapp.utils.ShopStatic
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
 
@@ -68,23 +72,25 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
                 counter_layout.visibility = RelativeLayout.INVISIBLE
 
             if (product.records.isNotEmpty()) {
-                textViewShop1.text = product.records[0].shopId
-                textViewShopPrice1.text = product.records[0].price.toString() + "₺"
+                textViewShop1.text = ShopStatic.shared.getShopName(product.records[0].shopId)
+                val price = product.records[0].price.toString() + itemView.resources.getString(R.string.price_symbol)
+                textViewShopPrice1.text = price
                 cardViewShop1.visibility = CardView.VISIBLE
 
                 if (product.records.size > 1) {
-                    textViewShop2.text = product.records[1].shopId
-                    textViewShopPrice2.text = product.records[1].price.toString() + "₺"
+                    textViewShop2.text = ShopStatic.shared.getShopName(product.records[1].shopId)
+                    val price = product.records[1].price.toString() + itemView.resources.getString(R.string.price_symbol)
+                    textViewShopPrice2.text = price
                     cardViewShop2.visibility = CardView.VISIBLE
                 }
                 else
                     cardViewShop2.visibility = CardView.INVISIBLE
 
 
-
                 if (product.records.size > 2) {
-                    textViewShop3.text = product.records[2].shopId
-                    textViewShopPrice3.text = product.records[2].price.toString() + "₺"
+                    textViewShop3.text = ShopStatic.shared.getShopName(product.records[2].shopId)
+                    val price = product.records[2].price.toString() + itemView.resources.getString(R.string.price_symbol)
+                    textViewShopPrice3.text = price
                     cardViewShop3.visibility = CardView.VISIBLE
                 }
                 else
@@ -96,7 +102,6 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
                 cardViewShop3.visibility = CardView.INVISIBLE
             }
 
-
             itemView.setOnClickListener {
                 action.onProductCardClick(product, adapterPosition)
             }
@@ -107,6 +112,10 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
     fun updateProducts(newProducts: List<Product>) {
         productList.clear()
         productList.addAll(newProducts)
+        notifyDataSetChanged()
+    }
+
+    fun refresh() {
         notifyDataSetChanged()
     }
 

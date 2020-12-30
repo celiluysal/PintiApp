@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.RecordRecyclerViewAdapter
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Product
+import com.example.pintiapp.utils.CategoryStatic
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
 
@@ -23,13 +24,17 @@ class ProductDetailActivity : AppCompatActivity() {
 
         val product = intent.extras?.get("product") as Product
 
-        val textViewProductName = findViewById<TextView>(R.id.textViewProductName)
-        val imageViewProduct : ImageView = findViewById(R.id.imageViewProduct)
+        val imageViewProduct: ImageView = findViewById(R.id.imageViewProduct)
+        val textViewProductName: TextView = findViewById(R.id.textViewProductName)
+        val textViewProductBrandAndCategory: TextView = findViewById(R.id.textViewProductBrandAndCategory)
 
-        textViewProductName.text = product.name
-//        imageViewProduct.setImageResource(product.photoURL)
 
         imageViewProduct.loadImage(product.photoURL, getProgressDrawable(this))
+        textViewProductName.text = product.name
+        val brand = product.brand
+        val category = CategoryStatic.shared.getCategoryName(product.categoryId)
+        val text = "$brand - $category"
+        textViewProductBrandAndCategory.text = text
 
         recyclerviewRecords = findViewById(R.id.recyclerviewRecords)
         recyclerviewRecords.layoutManager = LinearLayoutManager(this)
