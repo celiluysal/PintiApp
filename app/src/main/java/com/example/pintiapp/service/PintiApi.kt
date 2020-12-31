@@ -29,4 +29,10 @@ interface PintiApi {
         @Query("categoryid")
         categoryId: String
     ): Single<List<Product>>
+
+    @GET("find-product")
+    fun findProduct(
+        @Query("barcode")
+        barcode: String
+    ): Single<List<Product>>
 }

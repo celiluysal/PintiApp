@@ -33,6 +33,18 @@ class ShopStatic {
         return "Bulunamadı"
     }
 
+    fun getShopNameList(): ArrayList<String> {
+        val shopNameList: ArrayList<String> = arrayListOf()
+        shops.value.let {
+            if (it!!.isNotEmpty()) {
+                for (category in it){
+                    shopNameList.add(category.shopName)
+                }
+            }
+        }
+        return shopNameList
+    }
+
 
 
     @Inject

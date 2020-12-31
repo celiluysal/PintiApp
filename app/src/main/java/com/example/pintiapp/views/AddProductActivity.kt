@@ -18,6 +18,11 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import com.example.pintiapp.R
+import com.example.pintiapp.models.Product
+import com.example.pintiapp.utils.CategoryStatic
+import com.example.pintiapp.utils.ShopStatic
+import com.example.pintiapp.utils.getProgressDrawable
+import com.example.pintiapp.utils.loadImage
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.material.textfield.TextInputEditText
@@ -79,8 +84,23 @@ class AddProductActivity : AppCompatActivity() {
 
         buttonSave = findViewById(R.id.buttonSave)
 
+        val product: Product? = intent.extras?.get("product") as Product?
+        val barcode = intent.extras?.get("barcode") as String
 
+        if (product != null){
+            textInputEditTextProductName.setText(product.name)
+            textInputEditTextProductName.isEnabled = false
+            textInputEditTextProductBrand.setText(product.brand)
+            textInputEditTextProductBrand.isEnabled = false
+            imageViewAddPhoto.loadImage(product.photoURL, getProgressDrawable(this))
+            textViewAddPhoto.text = getString(R.string.photo_added)
+            cardViewAddPhoto.isEnabled = false
 
+            spinnerCategory.setSelection(product.categoryId.toInt())
+            spinnerCategory.isEnabled = false
+
+        } else
+            Log.e("activity barcode: ", barcode)
 
         setToolbar()
 
@@ -102,11 +122,10 @@ class AddProductActivity : AppCompatActivity() {
         }
 
 
-        val barcode = intent.getStringExtra("barcode")
-        if (barcode != null) {
-            textInputEditTextProductName.setText(barcode.toString())
-            textInputEditTextProductName.isEnabled = false
-        }
+//        if (barcode != null) {
+//            textInputEditTextProductName.setText(barcode.toString())
+//            textInputEditTextProductName.isEnabled = false
+//        }
     }
 
 
@@ -161,7 +180,8 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     private fun setSpinnerCategory(){
-        val category_list = arrayOf("Kategori","İçecekler", "siksuyu")
+//        val category_list = arrayOf("Kategori","İçecekler", "siksuyu")
+        val category_list = CategoryStatic.shared.getCategoryNameList()
 
         spinnerCategory.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, category_list)
         spinnerCategory.bringToFront()
@@ -175,14 +195,13 @@ class AddProductActivity : AppCompatActivity() {
                     textInputEditTextSpinnerCategory.setText(" ")
                     textInputSpinnerCategory.hint = getString(R.string.category)
                 }
-
-//                Toast.makeText(applicationContext, options.get(p2), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun setSpinnerMarket(){
-        val market_list = arrayOf("Market","A101", "BİM")
+//        val market_list = arrayOf("Market","A101", "BİM")
+        val market_list = ShopStatic.shared.getShopNameList()
 
         spinnerMarket.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, market_list)
         spinnerMarket.bringToFront()

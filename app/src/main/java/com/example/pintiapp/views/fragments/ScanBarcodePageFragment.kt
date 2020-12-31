@@ -15,7 +15,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.pintiapp.views.BarcodeScanActivity
-import com.example.pintiapp.viewModels.AddProductPageViewModel
+import com.example.pintiapp.viewModels.BarcodeScanViewModel
 import com.example.pintiapp.R
 
  class ScanBarcodePageFragment : Fragment() {
@@ -24,15 +24,13 @@ import com.example.pintiapp.R
         fun newInstance() = ScanBarcodePageFragment()
     }
 
-    private lateinit var viewModel: AddProductPageViewModel
+    private lateinit var viewModel: BarcodeScanViewModel
     private lateinit var cardViewScanBarcode: CardView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.scan_barcode_page_fragment, container, false)
+
         setToolbar()
 
         cardViewScanBarcode = rootView.findViewById(R.id.cardViewScanBarcode)
@@ -47,7 +45,7 @@ import com.example.pintiapp.R
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddProductPageViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(BarcodeScanViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

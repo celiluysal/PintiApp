@@ -107,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_below="@id/imageViewAddPricetag"
-                            android:text="@string/scan_barcode"
+                            android:text="@string/scan_pricetag"
                             android:layout_centerHorizontal="true"
                             android:maxLines="1"
                             android:textSize="18sp"

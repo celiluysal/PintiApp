@@ -74,7 +74,10 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
         ShopStatic.shared.refresh()
         CategoryStatic.shared.refresh()
 
-        observeViewModel()
+
+        ShopStatic.shared.shops.observe(viewLifecycleOwner, Observer {
+            observeViewModel()
+        })
 
     }
 

@@ -19,7 +19,7 @@ class CategoryStatic {
 
     var categories = MutableLiveData<List<Category>>()
 
-    fun setCategories(categoryList: List<Category>) {
+    private fun setCategories(categoryList: List<Category>) {
         categories.value = categoryList
     }
 
@@ -30,6 +30,18 @@ class CategoryStatic {
                 return category.categoryName
             }
         return "Bulunamadı"
+    }
+
+    fun getCategoryNameList(): ArrayList<String> {
+        val categoryNameList: ArrayList<String> = arrayListOf()
+        categories.value.let {
+            if (it!!.isNotEmpty()) {
+                for (category in it){
+                    categoryNameList.add(category.categoryName)
+                }
+            }
+        }
+        return categoryNameList
     }
 
 

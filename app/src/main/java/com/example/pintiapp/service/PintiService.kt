@@ -35,4 +35,8 @@ class PintiService {
     fun getProductsByCategoryId(categoryId: String): Single<List<Product>> {
         return api.fetchProductsByCategoryId(categoryId)
     }
+
+    fun findProduct(barcode: String): Single<List<Product>> {
+        return api.findProduct(barcode)
+    }
 }
