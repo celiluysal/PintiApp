@@ -34,6 +34,7 @@
         android:layout_alignParentBottom="true"
         app:itemIconTint="@color/bottom_nav_bar_selector"
         app:itemTextColor="@color/bottom_nav_bar_selector"
+        app:itemIconSize="28dp"
         android:background="?attr/bottom_nav_bar_background"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"

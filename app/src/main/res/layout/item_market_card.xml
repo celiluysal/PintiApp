@@ -20,14 +20,17 @@
             android:paddingHorizontal="10dp">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/relativeLayoutLeft"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/grid_space"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/relativeLayoutRight"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textViewMarketName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/market"
                     android:textStyle="bold"
@@ -35,7 +38,7 @@
 
                 <TextView
                     android:id="@+id/textViewLocationTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/location"
                     android:maxWidth="200dp"
@@ -70,6 +73,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/relativeLayoutRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"

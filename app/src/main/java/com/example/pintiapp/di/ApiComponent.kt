@@ -11,12 +11,14 @@ interface ApiComponent {
 
     fun inject(service: PintiService)
 
+    fun inject(staticClass: CategoryStatic)
+    fun inject(staticClass: ShopStatic)
+
     fun inject(viewModel: HomePageViewModel)
     fun inject(viewModel: CategoriesTabViewModel)
     fun inject(viewModel: MarketsTabViewModel)
-    fun inject(staticClass: CategoryStatic)
-    fun inject(staticClass: ShopStatic)
     fun inject(staticClass: ProductByCategoryViewModel)
     fun inject(staticClass: ProductByShopViewModel)
     fun inject(staticClass: BarcodeScanViewModel)
+    fun inject(staticClass: AddProductViewModel)
 }

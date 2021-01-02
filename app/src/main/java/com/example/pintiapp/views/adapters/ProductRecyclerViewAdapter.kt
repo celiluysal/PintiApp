@@ -7,14 +7,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Product
-import com.example.pintiapp.utils.CategoryStatic
-import com.example.pintiapp.utils.ShopStatic
-import com.example.pintiapp.utils.getProgressDrawable
-import com.example.pintiapp.utils.loadImage
+import com.example.pintiapp.utils.*
 
 class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
                                  var clickListener: OnProductItemClickListener
@@ -53,15 +49,10 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
 
             imageViewProduct.loadImage(product.photoURL, getProgressDrawable(itemView.context))
 
-            if (product.name.length > 15){
-                val displayProductName = product.name.substring(0,15) + "..."
-                textViewProductName.text = displayProductName
-            }
-            else
-                textViewProductName.text = product.name
+
+            textViewProductName.text = product.name
 
             val recordCount = product.records.size
-
             if (recordCount > 3){
                 textViewCounter.text = (
                         recordCount.toString() + " " +
@@ -73,14 +64,12 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
 
             if (product.records.isNotEmpty()) {
                 textViewShop1.text = ShopStatic.shared.getShopName(product.records[0].shopId)
-                val price = product.records[0].price.toString() + itemView.resources.getString(R.string.price_symbol)
-                textViewShopPrice1.text = price
+                textViewShopPrice1.text = getPriceText(itemView.context, product.records[0].price)
                 cardViewShop1.visibility = CardView.VISIBLE
 
                 if (product.records.size > 1) {
                     textViewShop2.text = ShopStatic.shared.getShopName(product.records[1].shopId)
-                    val price = product.records[1].price.toString() + itemView.resources.getString(R.string.price_symbol)
-                    textViewShopPrice2.text = price
+                    textViewShopPrice2.text = getPriceText(itemView.context, product.records[1].price)
                     cardViewShop2.visibility = CardView.VISIBLE
                 }
                 else
@@ -89,8 +78,7 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
 
                 if (product.records.size > 2) {
                     textViewShop3.text = ShopStatic.shared.getShopName(product.records[2].shopId)
-                    val price = product.records[2].price.toString() + itemView.resources.getString(R.string.price_symbol)
-                    textViewShopPrice3.text = price
+                    textViewShopPrice3.text = getPriceText(itemView.context, product.records[2].price)
                     cardViewShop3.visibility = CardView.VISIBLE
                 }
                 else

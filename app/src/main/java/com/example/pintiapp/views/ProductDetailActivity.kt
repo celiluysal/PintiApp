@@ -1,5 +1,6 @@
 package com.example.pintiapp.views
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,8 @@ import com.example.pintiapp.models.Product
 import com.example.pintiapp.utils.CategoryStatic
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProductDetailActivity : AppCompatActivity() {
     private lateinit var recyclerviewRecords: RecyclerView
@@ -40,8 +43,8 @@ class ProductDetailActivity : AppCompatActivity() {
         recyclerviewRecords = findViewById(R.id.recyclerviewRecords)
         recyclerviewRecords.layoutManager = LinearLayoutManager(this)
         recyclerviewRecords.adapter = RecordRecyclerViewAdapter(product.records)
-
     }
+
 
     private fun setToolbar(){
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)

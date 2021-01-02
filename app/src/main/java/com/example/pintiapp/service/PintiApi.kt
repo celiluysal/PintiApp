@@ -2,6 +2,7 @@ package com.example.pintiapp.service
 
 import com.example.pintiapp.models.Category
 import com.example.pintiapp.models.Product
+import com.example.pintiapp.models.Result
 import com.example.pintiapp.models.Shop
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -35,4 +36,38 @@ interface PintiApi {
         @Query("barcode")
         barcode: String
     ): Single<List<Product>>
+
+    @GET("add-product")
+    fun addProduct(
+        @Query("barcode")
+        barcode: String,
+        @Query("brand")
+        brand: String,
+        @Query("categoryid")
+        categoryid: String,
+        @Query("photourl")
+        photourl: String,
+        @Query("name")
+        name: String
+    ): Single<Result>
+
+    @GET("add-record")
+    fun addRecord(
+        @Query("barcode")
+        barcode: String,
+        @Query("ownerid")
+        ownerid: String,
+        @Query("ownername")
+        ownername: String,
+        @Query("shopid")
+        shopid: String,
+        @Query("locationtitle")
+        locationtitle: String,
+        @Query("locationcoordinate")
+        locationcoordinate: String,
+        @Query("price")
+        price: Double,
+        @Query("recorddate")
+        recorddate: String,
+    ): Single<Result>
 }

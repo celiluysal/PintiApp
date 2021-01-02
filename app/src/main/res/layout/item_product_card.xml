@@ -36,37 +36,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/textViewProductName"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <include layout="@layout/item_counter_card" />
             </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/textViewProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/product_name"
-                android:maxLines="1"
-                android:gravity="center_horizontal"
-                android:textSize="18sp"
 
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewProduct" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewProductName">
+                app:layout_constraintTop_toBottomOf="@+id/imageViewProduct">
+
+                <TextView
+                    android:id="@+id/textViewProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/product_name"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="@dimen/grid_space" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewShop1"
@@ -74,6 +73,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/grid_space"
                     android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
                     app:cardBackgroundColor="?attr/price_list_item1"
                     app:cardCornerRadius="4dp">
 

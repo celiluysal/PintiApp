@@ -1,5 +1,6 @@
 package com.example.pintiapp.views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Record
 import com.example.pintiapp.utils.ShopStatic
+import com.example.pintiapp.utils.getPriceText
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class RecordRecyclerViewAdapter (val recordList: List<Record>): RecyclerView.Adapter<RecordRecyclerViewAdapter.RecordViewHolder>() {
 
@@ -32,9 +36,7 @@ class RecordRecyclerViewAdapter (val recordList: List<Record>): RecyclerView.Ada
             textViewLocationTitle.text = record.locationTitle
             textViewRecordDate.text = record.recordDate
             textViewRecordOwner.text = record.ownerName
-            val price = record.price.toString() + itemView.resources.getString(R.string.price_symbol)
-            textViewPrice.text = price
-
+            textViewPrice.text = getPriceText(itemView.context,record.price)
         }
     }
 

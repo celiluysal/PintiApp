@@ -17,21 +17,23 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Product
-import com.example.pintiapp.utils.CategoryStatic
-import com.example.pintiapp.utils.ShopStatic
-import com.example.pintiapp.utils.getProgressDrawable
-import com.example.pintiapp.utils.loadImage
+import com.example.pintiapp.utils.*
+import com.example.pintiapp.viewModels.AddProductViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.text.DecimalFormat
 import java.util.*
 
 class AddProductActivity : AppCompatActivity() {
     private val PRODUCT_PHOTO_RQ = 100
     private val PRICETAG_PHOTO_RQ = 101
+
+    private lateinit var viewModel: AddProductViewModel
 
     private lateinit var textInputEditTextProductName: TextInputEditText
     private lateinit var textInputEditTextProductBrand: TextInputEditText
@@ -56,9 +58,15 @@ class AddProductActivity : AppCompatActivity() {
 
     private lateinit var buttonSave: Button
 
+    private lateinit var barcode: String
+    private lateinit var locationCoordinate: String
+    private var price: Double? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
+
+        viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
 
         textInputEditTextProductName = findViewById(R.id.textInputEditTextProductName)
         textInputEditTextProductBrand = findViewById(R.id.textInputEditTextProductBrand)
@@ -85,27 +93,13 @@ class AddProductActivity : AppCompatActivity() {
         buttonSave = findViewById(R.id.buttonSave)
 
         val product: Product? = intent.extras?.get("product") as Product?
-        val barcode = intent.extras?.get("barcode") as String
+        barcode = intent.extras?.get("barcode") as String
 
-        if (product != null){
-            textInputEditTextProductName.setText(product.name)
-            textInputEditTextProductName.isEnabled = false
-            textInputEditTextProductBrand.setText(product.brand)
-            textInputEditTextProductBrand.isEnabled = false
-            imageViewAddPhoto.loadImage(product.photoURL, getProgressDrawable(this))
-            textViewAddPhoto.text = getString(R.string.photo_added)
-            cardViewAddPhoto.isEnabled = false
-
-            spinnerCategory.setSelection(product.categoryId.toInt())
-            spinnerCategory.isEnabled = false
-
-        } else
-            Log.e("activity barcode: ", barcode)
+        if (product != null)
+            fillFields(product)
 
         setToolbar()
-
         getLocation()
-
         setSpinnerCategory()
         setSpinnerMarket()
 
@@ -118,14 +112,72 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         buttonSave.setOnClickListener {
-            checkFields()
+            if (checkFields()) {
+                if (product != null) {
+                    addRecord(barcode)
+                } else {
+                    addProduct(barcode)
+                }
+            }
         }
 
 
-//        if (barcode != null) {
-//            textInputEditTextProductName.setText(barcode.toString())
-//            textInputEditTextProductName.isEnabled = false
-//        }
+
+
+    }
+
+    private fun fillFields(product: Product) {
+        textInputEditTextProductName.setText(product.name)
+        textInputEditTextProductName.isEnabled = false
+
+        textInputEditTextProductBrand.setText(product.brand)
+        textInputEditTextProductBrand.isEnabled = false
+
+        viewModel.photoUrl.value = product.photoURL
+        imageViewAddPhoto.loadImage(product.photoURL, getProgressDrawable(this))
+        textViewAddPhoto.text = getString(R.string.photo_added)
+        cardViewAddPhoto.isEnabled = false
+
+        spinnerCategory.setSelection(product.categoryId.toInt())
+        spinnerCategory.isEnabled = false
+
+    }
+
+    private fun addProduct(barcode: String) {
+        val name = textInputEditTextProductName.text.toString()
+        val brand = textInputEditTextProductBrand.text.toString()
+        val categoryId = spinnerCategory.selectedItemPosition.toString()
+
+        viewModel.addProduct(barcode, brand, categoryId,
+            viewModel.photoUrl.value.toString(), name)
+
+        viewModel.resultAddProduct.observe(this, {
+            if (it.success) {
+                addRecord(barcode)
+            } else {
+                Toast.makeText(this, "Kayıt başarısız", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+    private fun addRecord(barcode: String) {
+        viewModel.addRecord(barcode, "123", "Celil Uysal",
+            spinnerMarket.selectedItemPosition.toString(),
+            textInputEditTextLocationTitle.text.toString(),
+            locationCoordinate, price!!, getDateAndTime())
+
+        viewModel.resultAddRecord.observe(this, {
+            if (it.success) {
+                Toast.makeText(this, "Kayıt Başarılı", Toast.LENGTH_SHORT).show()
+//                finish()
+//                parent.onBackPressed()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        })
     }
 
 
@@ -143,28 +195,35 @@ class AddProductActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PRODUCT_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
             val photo = data?.extras?.get("data") as Bitmap
-            setCardViewAddPhoto(photo)
-        }
-        else if (requestCode == PRICETAG_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
+            uploadPhotoAndSetImageView(photo)
+        } else if (requestCode == PRICETAG_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
             val photo = data?.extras?.get("data") as Bitmap
-            setCardViewAddPricetag(photo)
-        }
-        else {
+            uploadPriceTagAndSetImageView(photo)
+        } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    private fun setCardViewAddPricetag(photo: Bitmap) {
-        imageViewAddPricetag.setImageBitmap(photo)
-        textViewAddPricetag.text = getString(R.string.pricetag_scanned)
+    private fun uploadPriceTagAndSetImageView(photo: Bitmap) {
+        viewModel.uploadPhoto(barcode, photo)
+        viewModel.photoUrl.observe(this, androidx.lifecycle.Observer {
+            imageViewAddPhoto.loadImage(it, getProgressDrawable(this))
+            textViewAddPhoto.text = getString(R.string.photo_added)
+        })
     }
 
-    private fun setCardViewAddPhoto(photo: Bitmap){
-        imageViewAddPhoto.setImageBitmap(photo)
-        textViewAddPhoto.text = getString(R.string.photo_added)
+    private fun uploadPhotoAndSetImageView(photo: Bitmap) {
+        Log.e("a", "setCardViewAddPhoto")
+
+        viewModel.uploadPhoto(barcode, photo)
+        viewModel.photoUrl.observe(this, androidx.lifecycle.Observer {
+            imageViewAddPhoto.loadImage(it, getProgressDrawable(this))
+            textViewAddPhoto.text = getString(R.string.photo_added)
+        })
+
     }
 
-    private fun setToolbar(){
+    private fun setToolbar() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
         val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
         val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
@@ -179,19 +238,19 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSpinnerCategory(){
-//        val category_list = arrayOf("Kategori","İçecekler", "siksuyu")
+    private fun setSpinnerCategory() {
         val category_list = CategoryStatic.shared.getCategoryNameList()
 
-        spinnerCategory.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, category_list)
+        spinnerCategory.adapter =
+            ArrayAdapter(this, android.R.layout.simple_list_item_1, category_list)
         spinnerCategory.bringToFront()
-        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (category_list.get(p2) != getString(R.string.category)){
+                if (category_list.get(p2) != getString(R.string.category)) {
                     textInputEditTextSpinnerCategory.setText(" ")
                     textInputSpinnerCategory.hint = getString(R.string.category)
                 }
@@ -199,20 +258,19 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSpinnerMarket(){
-//        val market_list = arrayOf("Market","A101", "BİM")
+    private fun setSpinnerMarket() {
         val market_list = ShopStatic.shared.getShopNameList()
 
         spinnerMarket.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, market_list)
         spinnerMarket.bringToFront()
         textInputEditTextSpinnerMarket.isEnabled = false
-        spinnerMarket.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerMarket.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (market_list.get(p2) != getString(R.string.market)){
+                if (market_list.get(p2) != getString(R.string.market)) {
                     textInputEditTextSpinnerMarket.setText(" ")
                     textInputSpinnerMarket.hint = getString(R.string.market)
                 }
@@ -221,127 +279,140 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLocationTitle(location: Location){
+    private fun setLocationTitle(location: Location) {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        locationCoordinate = location.latitude.toString() + "," + location.longitude.toString()
+        Log.e("title", locationCoordinate)
         val geoCoder = Geocoder(this, Locale.getDefault())
-        val adress = geoCoder.getFromLocation(location.latitude, location.longitude,1)
+        val adress = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
 
-        val locationTitle = adress[0].thoroughfare + ", " +
-                adress[0].subAdminArea.toString() + ", " +
-                adress[0].adminArea.toString()
+        Log.e("title", adress.toString())
+        val thoroughfareText: String
+        val subAdminAreaText: String
+        val adminAreaText: String
+
+        thoroughfareText = if (adress[0].thoroughfare.isNullOrEmpty()) ""
+        else adress[0].thoroughfare.toString() + ", "
+
+        subAdminAreaText = if (adress[0].subAdminArea.isNullOrEmpty()) ""
+        else adress[0].subAdminArea.toString() + ", "
+
+        adminAreaText = if (adress[0].adminArea.isNullOrEmpty()) ""
+        else adress[0].adminArea.toString()
+
+        val locationTitle = thoroughfareText + subAdminAreaText + adminAreaText
 
         textInputEditTextLocationTitle.setText(locationTitle)
+        Log.e("title", locationTitle)
     }
 
     private fun checkFields(): Boolean {
         fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 
-        if (textInputEditTextProductName.text.toString().isNullOrBlank()){
+        if (viewModel.photoUrl.value.isNullOrEmpty()){
+            toast(getString(R.string.product_photo) + " " + getString(R.string.field_cant_be_empty))
+            return false
+        }
+
+        if (textInputEditTextProductName.text.toString().isNullOrBlank()) {
             toast(getString(R.string.product_name) + " " + getString(R.string.field_cant_be_empty))
             return false
         }
 
-        if (textInputEditTextProductBrand.text.toString().isNullOrBlank()){
+        if (textInputEditTextProductBrand.text.toString().isNullOrBlank()) {
             toast(getString(R.string.brand) + " " + getString(R.string.field_cant_be_empty))
             return false
         }
 
-        if (spinnerCategory.selectedItem == getString(R.string.category)){
+        if (spinnerCategory.selectedItem == getString(R.string.category)) {
             toast(getString(R.string.category) + " " + getString(R.string.unselected_spinner))
             return false
         }
 
-        if (spinnerMarket.selectedItem == getString(R.string.market)){
+        if (spinnerMarket.selectedItem == getString(R.string.market)) {
             toast(getString(R.string.market) + " " + getString(R.string.unselected_spinner))
             return false
         }
 
-        if (textInputEditTextProductPrice.text.toString().isNullOrBlank()){
+        if (textInputEditTextProductPrice.text.toString().isBlank()) {
             toast(getString(R.string.price) + " " + getString(R.string.field_cant_be_empty))
             return false
+        } else {
+            val priceValue= textInputEditTextProductPrice.getText().toString().toDouble()
+            price = priceValue
         }
 
 
 
-//        if (editTextPassword.text.toString().isNullOrBlank()) {
-//            toast(getString(R.string.password) + " " + getString(R.string.field_cant_be_empty))
-//            return false
-//        }
-//        else {
-//            if (editTextPassword.text.toString().length < 6){
-//                toast(getString(R.string.short_password))
-//                return false
-//            }
-//            else if (editTextPassword.text.toString().length > 18){
-//                toast(getString(R.string.long_password))
-//                return false
-//            }
-//            else if (editTextPassword.text.toString() != editTextPasswordAgain.text.toString()){
-//                toast(getString(R.string.did_not_match_passwords))
-//                return false
-//            }
-//        }
+
+
 
         return true
     }
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private fun getLocation(){
+    private fun getLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
     }
 
-    private fun isLocationEnabled():Boolean{
+    private fun isLocationEnabled(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         var lastLocation: Location? = null
-        if(isLocationEnabled()){
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
-                    var location: Location? = task.result
-                    if(location == null){
-                        NewLocationData()
-                    }else{
-                        Log.e("Debug:" ,"Your Location:"+ location.longitude)
-                        setLocationTitle(location)
-                    }
-                }
-            }else{
-                Log.e("sfb", "location false")
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Konum Servisi Gerekli")
-                builder.setMessage("Market konumu için konum sevisini aktif etmelisiniz.")
-                builder.setPositiveButton("Tamam") { dialog, which ->
-                    dialog.cancel()
-                    onBackPressed()
-                }
-                builder.show()
+        if (isLocationEnabled()) {
+            NewLocationData()
+//            fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+//                var location: Location? = task.result
+//                if (location == null) {
+//                    NewLocationData()
+//                } else {
+//                    setLocationTitle(location)
+//                }
+//            }
+        } else {
+            Log.e("sfb", "location false")
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Konum Servisi Gerekli")
+            builder.setMessage("Market konumu için konum sevisini aktif etmelisiniz.")
+            builder.setPositiveButton("Tamam") { dialog, which ->
+                dialog.cancel()
+                onBackPressed()
             }
+            builder.show()
+        }
     }
 
     @SuppressLint("MissingPermission")
     private fun NewLocationData() {
         var lastLocation: Location? = null
-        var locationRequest =  LocationRequest()
+        var locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
-        locationRequest.fastestInterval = 0
+//        locationRequest.fastestInterval = 0
 //        locationRequest.numUpdates = 1
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationProviderClient!!.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.myLooper()
+            locationRequest,
+            locationCallback,
+            Looper.myLooper()
         )
     }
 
-    private val locationCallback = object : LocationCallback(){
+    private val locationCallback = object : LocationCallback() {
         lateinit var lastLocation: Location
         override fun onLocationResult(locationResult: LocationResult) {
             lastLocation = locationResult.lastLocation
             setLocationTitle(lastLocation)
+//            Log.e("loc title ", lastLocation.toString())
+            Log.e("loc title ", lastLocation.latitude.toString())
+
         }
     }
 

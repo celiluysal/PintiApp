@@ -15,7 +15,11 @@
     <fragment
         android:id="@+id/addProductPageFragment"
         android:name="com.example.pintiapp.views.fragments.ScanBarcodePageFragment"
-        tools:layout="@layout/scan_barcode_page_fragment" />
+        tools:layout="@layout/scan_barcode_page_fragment" >
+        <action
+            android:id="@+id/goHome"
+            app:destination="@id/homePageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profilePageFragment"
         android:name="com.example.pintiapp.views.fragments.ProfilePageFragment"

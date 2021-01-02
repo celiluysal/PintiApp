@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.pintiapp.di.DaggerApiComponent
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.service.PintiService
+import com.example.pintiapp.utils.CategoryStatic
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver

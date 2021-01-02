@@ -44,7 +44,7 @@
 
     <color name="bottom_nav_bar_item_selected">@color/orange</color>
     <color name="bottom_nav_bar_item_default">#8D8D8D</color>
-    <color name="bottom_nav_bar_background">#D6D6D6</color>
+    <color name="bottom_nav_bar_background">#FFFFFF</color>
 
     <dimen name="grid_space">8dp</dimen>
 
