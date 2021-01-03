@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <queries>
         <intent>
@@ -21,14 +22,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PintiApp">
-        <activity android:name=".views.ProductByShopActivity"></activity>
-        <activity android:name=".views.ProductByCategoryActivity" />
+        
+        <provider
+            android:authorities="com.example.pintiapp.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider"/>
+        </provider>
+        
         <activity
-            android:name=".views.MainActivity2"
-            android:label="@string/title_activity_main2" />
-        <activity android:name=".views.SearchActivity" />
-        <activity android:name=".views.BarcodeScanActivity" />
-        <activity android:name=".views.AddProductActivity" />
+            android:name=".views.ProductByShopActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.ProductByCategoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.BarcodeScanActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.AddProductActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".views.ProductDetailActivity"
             android:screenOrientation="portrait" />
@@ -46,7 +65,6 @@
             android:theme="@style/splash_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

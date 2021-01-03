@@ -21,4 +21,5 @@ interface ApiComponent {
     fun inject(staticClass: ProductByShopViewModel)
     fun inject(staticClass: BarcodeScanViewModel)
     fun inject(staticClass: AddProductViewModel)
+    fun inject(staticClass: SearchViewModel)
 }

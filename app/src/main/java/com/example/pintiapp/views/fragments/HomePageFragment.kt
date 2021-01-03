@@ -3,7 +3,6 @@ package com.example.pintiapp.views.fragments
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +46,7 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
 
         swipeRefreshLayoutHomeFragment = rootView.findViewById(R.id.swipeRefreshLayoutShowProduct)
         recyclerviewProducts = rootView.findViewById(R.id.recyclerviewProducts)
-        progressBarHomeFragment = rootView.findViewById(R.id.progressBarHomeFragment)
+        progressBarHomeFragment = rootView.findViewById(R.id.progressBarProduct)
         textViewNotFound = rootView.findViewById(R.id.textViewNotFound)
 
         progressBarHomeFragment.visibility = ProgressBar.VISIBLE

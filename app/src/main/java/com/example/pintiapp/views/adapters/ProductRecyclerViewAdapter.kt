@@ -103,7 +103,8 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
         notifyDataSetChanged()
     }
 
-    fun refresh() {
+    fun clear() {
+        productList.clear()
         notifyDataSetChanged()
     }
 

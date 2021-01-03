@@ -33,6 +33,7 @@ class AddProductViewModel: ViewModel() {
     val loading = MutableLiveData<Boolean>()
 
     val photoUrl = MutableLiveData<String>()
+    val priceTagUrl = MutableLiveData<String>()
 
 
 
@@ -88,11 +89,10 @@ class AddProductViewModel: ViewModel() {
     }
 
 
-    fun uploadPhoto(barcode: String, photo: Bitmap) {
+    fun uploadPhoto(name: String, photo: Bitmap) {
         val storage = Firebase.storage
         val storageRef = storage.reference
-//        Log.e("a", "uploadPhoto")
-        val ref = storageRef.child("images/products/$barcode.jpeg")
+        val ref = storageRef.child("images/products/$name.jpeg")
         val baos = ByteArrayOutputStream()
         photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
@@ -103,10 +103,35 @@ class AddProductViewModel: ViewModel() {
         }.addOnSuccessListener {
             Log.e("a", "addOnSuccessListener")
 
-            storageRef.child("images/products/$barcode.jpeg").downloadUrl.addOnSuccessListener {
+            storageRef.child("images/products/$name.jpeg").downloadUrl.addOnSuccessListener {
                 // Got the download URL for 'users/me/profile.png'
                 Log.e("path: ", it.toString())
                 photoUrl.value = it.toString()
+
+            }.addOnFailureListener {
+                // Handle any errors
+            }
+        }
+    }
+
+    fun uploadPriceTag(name: String, photo: Bitmap) {
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+        val ref = storageRef.child("images/price_tags/$name.jpeg")
+        val baos = ByteArrayOutputStream()
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = ref.putBytes(data)
+        uploadTask.addOnFailureListener {
+            Log.e("a", "addOnFailureListener")
+        }.addOnSuccessListener {
+            Log.e("a", "addOnSuccessListener")
+
+            storageRef.child("images/price_tags/$name.jpeg").downloadUrl.addOnSuccessListener {
+                // Got the download URL for 'users/me/profile.png'
+                Log.e("path: ", it.toString())
+                priceTagUrl.value = it.toString()
 
             }.addOnFailureListener {
                 // Handle any errors

@@ -21,7 +21,7 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
     private lateinit var swipeRefreshLayoutHomeFragment: SwipeRefreshLayout
     private lateinit var recyclerviewProducts: RecyclerView
     private lateinit var productRecyclerViewAdapter: ProductRecyclerViewAdapter
-    private lateinit var progressBarHomeFragment: ProgressBar
+    private lateinit var progressBarProduct: ProgressBar
     private lateinit var textViewNotFound: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +37,10 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
 
         swipeRefreshLayoutHomeFragment = findViewById(R.id.swipeRefreshLayoutShowProduct)
         recyclerviewProducts = findViewById(R.id.recyclerviewProducts)
-        progressBarHomeFragment = findViewById(R.id.progressBarHomeFragment)
+        progressBarProduct = findViewById(R.id.progressBarProduct)
         textViewNotFound = findViewById(R.id.textViewNotFound)
 
-        progressBarHomeFragment.visibility = ProgressBar.VISIBLE
+        progressBarProduct.visibility = ProgressBar.VISIBLE
         textViewNotFound.visibility = TextView.GONE
 
         recyclerviewProducts.layoutManager = GridLayoutManager(this, 2)
@@ -64,9 +64,9 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
 
         viewModel.loading.observe(this, {
             if (it)
-                progressBarHomeFragment.visibility = ProgressBar.VISIBLE
+                progressBarProduct.visibility = ProgressBar.VISIBLE
             else
-                progressBarHomeFragment.visibility = ProgressBar.GONE
+                progressBarProduct.visibility = ProgressBar.GONE
         })
 
         viewModel.loadError.observe(this, {

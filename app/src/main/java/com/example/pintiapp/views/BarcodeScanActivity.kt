@@ -47,8 +47,6 @@ class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler 
             val barcode = rawResult.text
             viewModel.fetchData(barcode)
             observeViewModel(barcode)
-
-
         }
     }
 

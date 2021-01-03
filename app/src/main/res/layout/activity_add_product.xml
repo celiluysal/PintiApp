@@ -147,8 +147,6 @@
                             android:id="@+id/textInputEditTextProductName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_person"
-                            android:drawablePadding="8dp"
                             android:hint="@string/product_name"
                             android:inputType="text"
                             android:maxLines="1" />
@@ -167,8 +165,6 @@
                             android:id="@+id/textInputEditTextProductBrand"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_person"
-                            android:drawablePadding="8dp"
                             android:hint="@string/brand"
                             android:inputType="text"
                             android:maxLines="1" />
@@ -185,9 +181,8 @@
                             android:id="@+id/spinnerCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="28dp"
                             android:layout_alignBottom="@id/textInputSpinnerCategory"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginBottom="4dp"/>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputSpinnerCategory"
@@ -199,8 +194,7 @@
                                 android:id="@+id/textInputEditTextSpinnerCategory"
                                 android:enabled="false"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_person" />
+                                android:layout_height="wrap_content"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
 
@@ -215,9 +209,8 @@
                             android:id="@+id/spinnerMarket"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="28dp"
                             android:layout_alignBottom="@id/textInputSpinnerMarket"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginBottom="4dp"/>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputSpinnerMarket"
@@ -229,8 +222,7 @@
                                 android:id="@+id/textInputEditTextSpinnerMarket"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:drawableStart="@drawable/ic_person" />
+                                android:enabled="false" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </RelativeLayout>
 
@@ -248,8 +240,6 @@
                             android:id="@+id/textInputEditTextLocationTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_person"
-                            android:drawablePadding="8dp"
                             android:enabled="false"
                             android:hint="@string/location"
                             android:inputType="text"
@@ -270,8 +260,6 @@
                             android:id="@+id/textInputEditTextProductPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_person"
-                            android:drawablePadding="8dp"
                             android:hint="@string/price"
                             android:inputType="numberDecimal"
                             android:maxLines="1" />

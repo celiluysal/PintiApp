@@ -70,4 +70,10 @@ interface PintiApi {
         @Query("recorddate")
         recorddate: String,
     ): Single<Result>
+
+    @GET("search-product")
+    fun searchProduct(
+        @Query("name")
+        name: String
+    ): Single<List<Product>>
 }

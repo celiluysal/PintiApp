@@ -54,4 +54,8 @@ class PintiService {
         return api.addRecord(barcode, ownerid, ownername, shopid,
             locationtitle, locationcoordinate, price, recorddate)
     }
+
+    fun searchProduct(name: String): Single<List<Product>> {
+        return api.searchProduct(name)
+    }
 }

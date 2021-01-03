@@ -5,29 +5,35 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
+import android.media.ExifInterface
 import android.os.Bundle
+import android.os.Environment
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.utils.*
 import com.example.pintiapp.viewModels.AddProductViewModel
 import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationRequest
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.text.DecimalFormat
+import com.google.firebase.auth.FirebaseAuth
+import java.io.File
 import java.util.*
+
 
 class AddProductActivity : AppCompatActivity() {
     private val PRODUCT_PHOTO_RQ = 100
@@ -58,6 +64,12 @@ class AddProductActivity : AppCompatActivity() {
 
     private lateinit var buttonSave: Button
 
+    private lateinit var photoFile: File
+    private val PHOTO_FILE_NAME = "photo.jpeg"
+
+    private lateinit var auth: FirebaseAuth
+
+
     private lateinit var barcode: String
     private lateinit var locationCoordinate: String
     private var price: Double? = null
@@ -65,6 +77,11 @@ class AddProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
+
+        auth = FirebaseAuth.getInstance()
+        Log.e("user", auth.uid.toString())
+        Log.e("user",  auth.currentUser?.email.toString())
+        Log.e("user",  auth.currentUser?.displayName.toString())
 
         viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
 
@@ -122,8 +139,6 @@ class AddProductActivity : AppCompatActivity() {
         }
 
 
-
-
     }
 
     private fun fillFields(product: Product) {
@@ -148,8 +163,10 @@ class AddProductActivity : AppCompatActivity() {
         val brand = textInputEditTextProductBrand.text.toString()
         val categoryId = spinnerCategory.selectedItemPosition.toString()
 
-        viewModel.addProduct(barcode, brand, categoryId,
-            viewModel.photoUrl.value.toString(), name)
+        viewModel.addProduct(
+            barcode, brand, categoryId,
+            viewModel.photoUrl.value.toString(), name
+        )
 
         viewModel.resultAddProduct.observe(this, {
             if (it.success) {
@@ -162,15 +179,20 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     private fun addRecord(barcode: String) {
-        viewModel.addRecord(barcode, "123", "Celil Uysal",
+        auth = FirebaseAuth.getInstance()
+        viewModel.addRecord(
+            barcode,
+            auth.currentUser?.uid.toString(),
+            auth.currentUser?.displayName.toString(),
             spinnerMarket.selectedItemPosition.toString(),
             textInputEditTextLocationTitle.text.toString(),
-            locationCoordinate, price!!, getDateAndTime())
+            locationCoordinate, price!!, getDateAndTime()
+        )
 
         viewModel.resultAddRecord.observe(this, {
             if (it.success) {
                 Toast.makeText(this, "Kayıt Başarılı", Toast.LENGTH_SHORT).show()
-//                finish()
+                finish()
 //                parent.onBackPressed()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -184,7 +206,17 @@ class AddProductActivity : AppCompatActivity() {
     @SuppressLint("QueryPermissionsNeeded")
     private fun takePhoto(requestCode: Int) {
         val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE)
+        val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
+
+        photoFile = File(storageDirectory, PHOTO_FILE_NAME)
+
+        val fileProvider = FileProvider.getUriForFile(
+            this,
+            "com.example.pintiapp.fileprovider",
+            photoFile
+        )
+        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
         if (takePhotoIntent.resolveActivity(this.packageManager) != null) {
             startActivityForResult(takePhotoIntent, requestCode)
         } else {
@@ -193,34 +225,44 @@ class AddProductActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PRODUCT_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
-            val photo = data?.extras?.get("data") as Bitmap
-            uploadPhotoAndSetImageView(photo)
-        } else if (requestCode == PRICETAG_PHOTO_RQ && resultCode == Activity.RESULT_OK) {
-            val photo = data?.extras?.get("data") as Bitmap
-            uploadPriceTagAndSetImageView(photo)
-        } else {
+
+        if (resultCode == Activity.RESULT_OK) {
+            var photo = BitmapFactory.decodeFile(photoFile.absolutePath)
+            photo = originalRotate(photo, photoFile)
+            photo = resizeBitmap(photo, 1024)
+
+            if (requestCode == PRODUCT_PHOTO_RQ)
+                uploadPhotoAndSetImageView(photo)
+            else if (requestCode == PRICETAG_PHOTO_RQ)
+                uploadPriceTagAndSetImageView(photo)
+
+        } else
             super.onActivityResult(requestCode, resultCode, data)
-        }
+
     }
 
+
     private fun uploadPriceTagAndSetImageView(photo: Bitmap) {
-        viewModel.uploadPhoto(barcode, photo)
-        viewModel.photoUrl.observe(this, androidx.lifecycle.Observer {
-            imageViewAddPhoto.loadImage(it, getProgressDrawable(this))
-            textViewAddPhoto.text = getString(R.string.photo_added)
+        imageViewAddPricetag.setImageBitmap(photo)
+        viewModel.uploadPriceTag(barcode + " " + Date().toString(), photo)
+        viewModel.priceTagUrl.observe(this, androidx.lifecycle.Observer {
+//            imageViewAddPricetag.loadImage(it, getProgressDrawable(this))
+            textViewAddPricetag.text = getString(R.string.photo_added)
+            if (photoFile.exists())
+                photoFile.delete()
         })
     }
 
     private fun uploadPhotoAndSetImageView(photo: Bitmap) {
-        Log.e("a", "setCardViewAddPhoto")
-
+        imageViewAddPhoto.setImageBitmap(photo)
         viewModel.uploadPhoto(barcode, photo)
         viewModel.photoUrl.observe(this, androidx.lifecycle.Observer {
-            imageViewAddPhoto.loadImage(it, getProgressDrawable(this))
+//            imageViewAddPhoto.loadImage(it, getProgressDrawable(this))
             textViewAddPhoto.text = getString(R.string.photo_added)
-        })
+            if (photoFile.exists())
+                photoFile.delete()
 
+        })
     }
 
     private fun setToolbar() {
@@ -309,7 +351,7 @@ class AddProductActivity : AppCompatActivity() {
     private fun checkFields(): Boolean {
         fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 
-        if (viewModel.photoUrl.value.isNullOrEmpty()){
+        if (viewModel.photoUrl.value.isNullOrEmpty()) {
             toast(getString(R.string.product_photo) + " " + getString(R.string.field_cant_be_empty))
             return false
         }
@@ -338,13 +380,9 @@ class AddProductActivity : AppCompatActivity() {
             toast(getString(R.string.price) + " " + getString(R.string.field_cant_be_empty))
             return false
         } else {
-            val priceValue= textInputEditTextProductPrice.getText().toString().toDouble()
+            val priceValue = textInputEditTextProductPrice.getText().toString().toDouble()
             price = priceValue
         }
-
-
-
-
 
 
         return true
