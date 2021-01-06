@@ -45,6 +45,7 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var textInputEditTextProductBrand: TextInputEditText
     private lateinit var textInputEditTextLocationTitle: TextInputEditText
     private lateinit var textInputEditTextProductPrice: TextInputEditText
+    private lateinit var progressBarPrice: ProgressBar
 
     private lateinit var textInputEditTextSpinnerCategory: TextInputEditText
     private lateinit var textInputSpinnerCategory: TextInputLayout
@@ -89,6 +90,8 @@ class AddProductActivity : AppCompatActivity() {
         textInputEditTextProductBrand = findViewById(R.id.textInputEditTextProductBrand)
         textInputEditTextLocationTitle = findViewById(R.id.textInputEditTextLocationTitle)
         textInputEditTextProductPrice = findViewById(R.id.textInputEditTextProductPrice)
+        progressBarPrice = findViewById(R.id.progressBarPrice)
+        progressBarPrice.visibility = ProgressBar.GONE
 
         textInputEditTextSpinnerCategory = findViewById(R.id.textInputEditTextSpinnerCategory)
         textInputSpinnerCategory = findViewById(R.id.textInputSpinnerCategory)
@@ -244,12 +247,20 @@ class AddProductActivity : AppCompatActivity() {
 
     private fun uploadPriceTagAndSetImageView(photo: Bitmap) {
         imageViewAddPricetag.setImageBitmap(photo)
+        progressBarPrice.visibility = ProgressBar.VISIBLE
         viewModel.uploadPriceTag(barcode + " " + Date().toString(), photo)
         viewModel.priceTagUrl.observe(this, androidx.lifecycle.Observer {
 //            imageViewAddPricetag.loadImage(it, getProgressDrawable(this))
             textViewAddPricetag.text = getString(R.string.photo_added)
             if (photoFile.exists())
                 photoFile.delete()
+        })
+
+        viewModel.resultPriceTag.observe(this, {
+            it.let {
+                progressBarPrice.visibility = ProgressBar.GONE
+                textInputEditTextProductPrice.setText(it.output)
+            }
         })
     }
 

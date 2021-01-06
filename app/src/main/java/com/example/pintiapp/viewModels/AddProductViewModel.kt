@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pintiapp.di.DaggerApiComponent
+import com.example.pintiapp.models.OcrResult
 import com.example.pintiapp.models.Result
+import com.example.pintiapp.service.OcrService
 import com.example.pintiapp.service.PintiService
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -20,14 +22,23 @@ class AddProductViewModel: ViewModel() {
     @Inject
     lateinit var pintiService: PintiService
 
+    @Inject
+    lateinit var ocrService: OcrService
+
     init {
         DaggerApiComponent.create().inject(this)
+
+
+//        DaggerOcrApiComponent.create().inject(this)
     }
 
     private val disposible = CompositeDisposable()
 
     val resultAddProduct = MutableLiveData<Result>()
     val resultAddRecord = MutableLiveData<Result>()
+
+    val resultPriceTag = MutableLiveData<OcrResult>()
+
 //    val success = MutableLiveData<Boolean>()
     val loadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
@@ -37,6 +48,24 @@ class AddProductViewModel: ViewModel() {
 
 
 
+
+    fun getPrice(url: String) {
+        disposible.add(
+            ocrService.getPrice(url)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object: DisposableSingleObserver<OcrResult>() {
+                    override fun onSuccess(value: OcrResult?) {
+                        resultPriceTag.value = value
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        Log.e("getPrice e ", e.toString())
+                    }
+
+                })
+        )
+    }
 
 
     fun addRecord(barcode: String, ownerid: String, ownername: String,
@@ -132,6 +161,9 @@ class AddProductViewModel: ViewModel() {
                 // Got the download URL for 'users/me/profile.png'
                 Log.e("path: ", it.toString())
                 priceTagUrl.value = it.toString()
+
+                getPrice(it.toString())
+                Log.e("fdg","price tag")
 
             }.addOnFailureListener {
                 // Handle any errors

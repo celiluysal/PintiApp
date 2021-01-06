@@ -39,8 +39,10 @@ class ProfilePageFragment : Fragment() {
         auth = Firebase.auth
         val user = auth.currentUser
 
-        val textView3 = rootView.findViewById<TextView>(R.id.textView3)
-        textView3.text = user?.email.toString()
+        val textViewMail = rootView.findViewById<TextView>(R.id.textViewMail)
+        val textViewFullName = rootView.findViewById<TextView>(R.id.textViewFullName)
+        textViewMail.text = user?.email.toString()
+        textViewFullName.text = user?.displayName.toString()
 
         setToolbar()
 
