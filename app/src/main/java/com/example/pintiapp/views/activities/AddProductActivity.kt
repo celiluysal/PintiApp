@@ -1,4 +1,4 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -6,11 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
-import android.media.ExifInterface
 import android.os.Bundle
 import android.os.Environment
 import android.os.Looper
@@ -64,6 +62,8 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var textViewAddPricetag: TextView
 
     private lateinit var buttonSave: Button
+    private lateinit var cardViewAddProductDetail: CardView
+
 
     private lateinit var photoFile: File
     private val PHOTO_FILE_NAME = "photo.jpeg"
@@ -110,6 +110,8 @@ class AddProductActivity : AppCompatActivity() {
         imageViewAddPricetag = findViewById(R.id.imageViewAddPricetag)
         textViewAddPricetag = findViewById(R.id.textViewAddPricetag)
 
+        cardViewAddProductDetail = findViewById(R.id.cardViewAddProductDetail)
+
         buttonSave = findViewById(R.id.buttonSave)
 
         val product: Product? = intent.extras?.get("product") as Product?
@@ -122,6 +124,8 @@ class AddProductActivity : AppCompatActivity() {
         getLocation()
         setSpinnerCategory()
         setSpinnerMarket()
+
+        cardViewAddProductDetail.visibility = CardView.GONE
 
         cardViewAddPhoto.setOnClickListener {
             takePhoto(PRODUCT_PHOTO_RQ)
@@ -246,20 +250,36 @@ class AddProductActivity : AppCompatActivity() {
 
 
     private fun uploadPriceTagAndSetImageView(photo: Bitmap) {
+
         imageViewAddPricetag.setImageBitmap(photo)
         progressBarPrice.visibility = ProgressBar.VISIBLE
         viewModel.uploadPriceTag(barcode + " " + Date().toString(), photo)
         viewModel.priceTagUrl.observe(this, androidx.lifecycle.Observer {
 //            imageViewAddPricetag.loadImage(it, getProgressDrawable(this))
-            textViewAddPricetag.text = getString(R.string.photo_added)
+            cardViewAddProductDetail.visibility = CardView.VISIBLE
+            textViewAddPricetag.text = getString(R.string.pricetag_detecting)
+
+            viewModel.getPrice(it)
+
+
             if (photoFile.exists())
                 photoFile.delete()
         })
 
         viewModel.resultPriceTag.observe(this, {
             it.let {
-                progressBarPrice.visibility = ProgressBar.GONE
+                textInputEditTextProductPrice.isEnabled = true
                 textInputEditTextProductPrice.setText(it.output)
+                textViewAddPricetag.text = getString(R.string.pricetag_scanned)
+
+            }
+        })
+
+        viewModel.loadingPriceTag.observe(this, {
+            if (it)
+                progressBarPrice.visibility = ProgressBar.VISIBLE
+            else {
+                progressBarPrice.visibility = ProgressBar.GONE
             }
         })
     }

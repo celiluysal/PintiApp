@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.RegisterActivity">
+    tools:context=".views.activities.RegisterActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar_layout"
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <include
+            android:id="@+id/includeToolbar"
             layout="@layout/main_toolbar"
             android:visibility="visible" />
     </RelativeLayout>

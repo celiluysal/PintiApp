@@ -12,11 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.MarketRecyclerViewAdapter
-import com.example.pintiapp.models.MarketModel
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Shop
 import com.example.pintiapp.viewModels.MarketsTabViewModel
-import com.example.pintiapp.views.ProductByShopActivity
+import com.example.pintiapp.views.activities.ProductByShopActivity
 
 class MarketsTabFragment : Fragment(), MarketRecyclerViewAdapter.OnMarketItemClickListener {
 

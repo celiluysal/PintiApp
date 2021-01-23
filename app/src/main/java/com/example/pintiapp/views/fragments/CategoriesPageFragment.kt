@@ -6,14 +6,21 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pintiapp.R
-import com.example.pintiapp.views.SearchActivity
+import com.example.pintiapp.databinding.ActivityMainBinding
+import com.example.pintiapp.viewModels.HomePageViewModel
+import com.example.pintiapp.viewModels.ToolbarViewModel
+import com.example.pintiapp.views.activities.MainActivity
+import com.example.pintiapp.views.activities.SearchActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class CategoriesPageFragment : Fragment() {
+
+    private lateinit var toolbarViewModel: ToolbarViewModel
 
     companion object {
         fun newInstance() = CategoriesPageFragment()
@@ -30,24 +37,6 @@ class CategoriesPageFragment : Fragment() {
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-
-
-
-        // TODO: Use the ViewModel
-    }
-
-
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewPager = (activity as AppCompatActivity).findViewById(R.id.categories_view_pager)
-
-    }
 
     private fun setToolbar(){
         val m = (activity as AppCompatActivity)
@@ -59,10 +48,6 @@ class CategoriesPageFragment : Fragment() {
         imageViewBack.visibility = ImageView.INVISIBLE
 
         m.setSupportActionBar(toolbar)
-        imageViewBack.setOnClickListener {
-            m.onBackPressed()
-        }
-
         imageViewSearch.setOnClickListener {
             activity?.let{
                 val intent = Intent (it, SearchActivity::class.java)

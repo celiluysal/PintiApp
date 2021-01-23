@@ -4,33 +4,30 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ItemCategoryCardBinding
+import com.example.pintiapp.databinding.ItemMarketCardBinding
 import com.example.pintiapp.models.Shop
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
 
 class MarketRecyclerViewAdapter(
-        val marketList: ArrayList<Shop>,
-        var clickListener: OnMarketItemClickListener
-):
-        RecyclerView.Adapter<MarketRecyclerViewAdapter.MarketViewHolder>() {
+    val marketList: ArrayList<Shop>,
+    var clickListener: OnMarketItemClickListener
+) :
+    RecyclerView.Adapter<MarketRecyclerViewAdapter.MarketViewHolder>() {
 
-    class MarketViewHolder(container: ViewGroup): RecyclerView.ViewHolder(
-            LayoutInflater.from(container.context).inflate(
-                    R.layout.item_category_card,
-                    container,
-                    false
-            )
-    ){
+    class MarketViewHolder(val binding: ItemCategoryCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        val imageViewContent : ImageView = itemView.findViewById(R.id.imageViewContent)
-        val textViewContentName : TextView = itemView.findViewById(R.id.textViewContentName)
+        fun bind(shop: Shop, action: OnMarketItemClickListener) {
 
-        fun bind(shop: Shop, action: OnMarketItemClickListener){
 
-            imageViewContent.loadImage(shop.photoURL, getProgressDrawable(itemView.context))
-            textViewContentName.text = shop.shopName
+
+            binding.imageViewContent.loadImage(shop.photoURL, getProgressDrawable(itemView.context))
+            binding.textViewContentName.text = shop.shopName
 
             itemView.setOnClickListener {
                 action.onMarketCardClick(shop, adapterPosition)
@@ -46,7 +43,11 @@ class MarketRecyclerViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
-        return MarketViewHolder(parent)
+        val binding = ItemCategoryCardBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return MarketViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MarketViewHolder, position: Int) {
@@ -57,7 +58,7 @@ class MarketRecyclerViewAdapter(
         return marketList.size
     }
 
-    interface OnMarketItemClickListener{
+    interface OnMarketItemClickListener {
         fun onMarketCardClick(item: Shop, position: Int)
     }
 }

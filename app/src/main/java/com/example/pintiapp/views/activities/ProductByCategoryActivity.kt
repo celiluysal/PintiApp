@@ -1,4 +1,4 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,21 +12,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ActivityProductByCategoryBinding
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.viewModels.ProductByCategoryViewModel
 import com.example.pintiapp.views.adapters.ProductRecyclerViewAdapter
 
 class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapter.OnProductItemClickListener {
     private lateinit var viewModel: ProductByCategoryViewModel
-    private lateinit var swipeRefreshLayoutHomeFragment: SwipeRefreshLayout
-    private lateinit var recyclerviewProducts: RecyclerView
+    private lateinit var binding: ActivityProductByCategoryBinding
     private lateinit var productRecyclerViewAdapter: ProductRecyclerViewAdapter
-    private lateinit var progressBarProduct: ProgressBar
-    private lateinit var textViewNotFound: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_by_category)
+        binding = ActivityProductByCategoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setToolbar()
 
@@ -35,20 +34,15 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
         viewModel = ViewModelProvider(this).get(ProductByCategoryViewModel::class.java)
         viewModel.refresh(categoryId)
 
-        swipeRefreshLayoutHomeFragment = findViewById(R.id.swipeRefreshLayoutShowProduct)
-        recyclerviewProducts = findViewById(R.id.recyclerviewProducts)
-        progressBarProduct = findViewById(R.id.progressBarProduct)
-        textViewNotFound = findViewById(R.id.textViewNotFound)
+        binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.VISIBLE
+        binding.includeShowProducts.textViewNotFound.visibility = TextView.GONE
 
-        progressBarProduct.visibility = ProgressBar.VISIBLE
-        textViewNotFound.visibility = TextView.GONE
-
-        recyclerviewProducts.layoutManager = GridLayoutManager(this, 2)
+        binding.includeShowProducts.recyclerviewProducts.layoutManager = GridLayoutManager(this, 2)
         productRecyclerViewAdapter = ProductRecyclerViewAdapter(arrayListOf(), this)
-        recyclerviewProducts.adapter = productRecyclerViewAdapter
+        binding.includeShowProducts.recyclerviewProducts.adapter = productRecyclerViewAdapter
 
-        swipeRefreshLayoutHomeFragment.setOnRefreshListener {
-            swipeRefreshLayoutHomeFragment.isRefreshing = false
+        binding.includeShowProducts.swipeRefreshLayoutShowProduct.setOnRefreshListener {
+            binding.includeShowProducts.swipeRefreshLayoutShowProduct.isRefreshing = false
             viewModel.refresh(categoryId)
             observeViewModel()
         }
@@ -64,16 +58,16 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
 
         viewModel.loading.observe(this, {
             if (it)
-                progressBarProduct.visibility = ProgressBar.VISIBLE
+                binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.VISIBLE
             else
-                progressBarProduct.visibility = ProgressBar.GONE
+                binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.GONE
         })
 
         viewModel.loadError.observe(this, {
             if (it)
-                textViewNotFound.visibility = TextView.VISIBLE
+                binding.includeShowProducts.textViewNotFound.visibility = TextView.VISIBLE
             else
-                textViewNotFound.visibility = TextView.GONE
+                binding.includeShowProducts.textViewNotFound.visibility = TextView.GONE
 
         })
     }
@@ -88,16 +82,13 @@ class ProductByCategoryActivity : AppCompatActivity(), ProductRecyclerViewAdapte
     }
 
     private fun setToolbar(){
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
-        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+        setSupportActionBar(binding.includeToolbar.mainToolbar)
+        binding.includeToolbar.imageViewSearch.visibility = ImageView.INVISIBLE
+        binding.includeToolbar.imageViewBack.visibility = ImageView.VISIBLE
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.includeToolbar.mainToolbar)
 
-        imageViewSearch.visibility = ImageView.INVISIBLE
-        imageViewBack.visibility = ImageView.VISIBLE
-
-        imageViewBack.setOnClickListener {
+        binding.includeToolbar.imageViewBack.setOnClickListener {
             onBackPressed()
         }
     }

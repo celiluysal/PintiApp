@@ -1,43 +1,38 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.pintiapp.R
-import com.example.pintiapp.models.Product
+import com.example.pintiapp.databinding.ActivityBarcodeScanBinding
 import com.example.pintiapp.viewModels.BarcodeScanViewModel
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private lateinit var viewModel: BarcodeScanViewModel
-    private lateinit var zxscan: ZXingScannerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var textViewNotFound: TextView
+    private lateinit var binding: ActivityBarcodeScanBinding
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_barcode_scan)
+        binding = ActivityBarcodeScanBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setToolbar()
 
         viewModel = ViewModelProvider(this).get(BarcodeScanViewModel::class.java)
-        progressBar = findViewById(R.id.progressBar)
-        textViewNotFound = findViewById(R.id.textViewNotFound)
 
-        progressBar.visibility = ProgressBar.GONE
-        textViewNotFound.visibility = TextView.GONE
+        binding.progressBar.visibility = ProgressBar.GONE
+        binding.textViewNotFound.visibility = TextView.GONE
 
-        zxscan = findViewById(R.id.zxscan)
-        zxscan.setResultHandler (this@BarcodeScanActivity)
-        zxscan.startCamera()
+        binding.zxScanView.setResultHandler (this@BarcodeScanActivity)
+        binding.zxScanView.startCamera()
 
     }
 
@@ -70,31 +65,26 @@ class BarcodeScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler 
 
         viewModel.loading.observe(this, {
             if (it)
-                progressBar.visibility = ProgressBar.VISIBLE
+                binding.progressBar.visibility = ProgressBar.VISIBLE
             else
-                progressBar.visibility = ProgressBar.GONE
+                binding.progressBar.visibility = ProgressBar.GONE
         })
 
         viewModel.loadError.observe(this, {
             if (it)
-                textViewNotFound.visibility = TextView.VISIBLE
+                binding.textViewNotFound.visibility = TextView.VISIBLE
             else
-                textViewNotFound.visibility = TextView.GONE
+                binding.textViewNotFound.visibility = TextView.GONE
         })
     }
 
 
     private fun setToolbar(){
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
-        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+        setSupportActionBar(binding.includeToolbar.mainToolbar)
+        binding.includeToolbar.imageViewSearch.visibility = ImageView.INVISIBLE
+        binding.includeToolbar.imageViewBack.visibility = ImageView.VISIBLE
 
-        setSupportActionBar(toolbar)
-
-        imageViewSearch.visibility = ImageView.INVISIBLE
-        imageViewBack.visibility = ImageView.VISIBLE
-
-        imageViewBack.setOnClickListener {
+        binding.includeToolbar.imageViewBack.setOnClickListener {
             onBackPressed()
         }
     }

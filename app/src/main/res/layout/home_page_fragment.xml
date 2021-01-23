@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.HomePageFragment">
 
-    <include layout="@layout/layout_show_products" />
+    <include
+        android:id="@+id/includeLayout"
+        layout="@layout/layout_show_products" />
 
 </FrameLayout>

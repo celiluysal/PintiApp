@@ -48,6 +48,7 @@
 
     <string name="scan_pricetag">Etiket Tara</string>
     <string name="pricetag_scanned">Etiket Tarandı</string>
+    <string name="pricetag_detecting">Fiyat Algılanıyor</string>
 
     <string name="product_photo">Ürün fotoğrafı</string>
     <string name="search">Search</string>

@@ -34,34 +34,34 @@
         </provider>
         
         <activity
-            android:name=".views.ProductByShopActivity"
+            android:name=".views.activities.ProductByShopActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.ProductByCategoryActivity"
+            android:name=".views.activities.ProductByCategoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.SearchActivity"
+            android:name=".views.activities.SearchActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.BarcodeScanActivity"
+            android:name=".views.activities.BarcodeScanActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.AddProductActivity"
+            android:name=".views.activities.AddProductActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.ProductDetailActivity"
+            android:name=".views.activities.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.RegisterActivity"
+            android:name=".views.activities.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.LoginActivity"
+            android:name=".views.activities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.LauncherActivity"
+            android:name=".views.activities.LauncherActivity"
             android:theme="@style/splash_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

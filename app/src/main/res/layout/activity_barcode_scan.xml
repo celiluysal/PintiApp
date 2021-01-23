@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.BarcodeScanActivity">
+    tools:context=".views.activities.BarcodeScanActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <include
+            android:id="@+id/includeToolbar"
             layout="@layout/main_toolbar"
             android:visibility="visible"/>
     </RelativeLayout>
@@ -21,7 +22,7 @@
         android:layout_below="@id/toolbar_layout">
 
         <me.dm7.barcodescanner.zxing.ZXingScannerView
-            android:id="@+id/zxscan"
+            android:id="@+id/zxScanView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:borderColor="@color/white"

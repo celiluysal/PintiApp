@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.pintiapp.views.BarcodeScanActivity
+import com.example.pintiapp.views.activities.BarcodeScanActivity
 import com.example.pintiapp.viewModels.BarcodeScanViewModel
 import com.example.pintiapp.R
 

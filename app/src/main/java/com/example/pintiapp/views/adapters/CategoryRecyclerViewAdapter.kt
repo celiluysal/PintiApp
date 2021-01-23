@@ -6,31 +6,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ItemCategoryCardBinding
 import com.example.pintiapp.models.Category
 import com.example.pintiapp.utils.getProgressDrawable
 import com.example.pintiapp.utils.loadImage
 
 class CategoryRecyclerViewAdapter(
-        val categoryList: ArrayList<Category>,
-        var clickListener: OnCategoryItemClickListener
-):
-        RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
+    private val categoryList: ArrayList<Category>,
+    var clickListener: OnCategoryItemClickListener
+) :
+    RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
 
-    class CategoryViewHolder(container: ViewGroup): RecyclerView.ViewHolder(
-            LayoutInflater.from(container.context).inflate(
-                    R.layout.item_category_card,
-                    container,
-                    false
-            )
-    ){
+    class CategoryViewHolder(val binding: ItemCategoryCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        val imageViewContent : ImageView = itemView.findViewById(R.id.imageViewContent)
-        val textViewContentName : TextView = itemView.findViewById(R.id.textViewContentName)
+        fun bind(category: Category, action: OnCategoryItemClickListener) {
 
-        fun bind(category: Category, action: OnCategoryItemClickListener){
-
-            imageViewContent.loadImage(category.photoURL, getProgressDrawable(itemView.context))
-            textViewContentName.text = category.categoryName
+            binding.imageViewContent.loadImage(category.photoURL, getProgressDrawable(itemView.context))
+            binding.textViewContentName.text = category.categoryName
 
             itemView.setOnClickListener {
                 action.onCategoryCardClick(category, adapterPosition)
@@ -46,8 +39,11 @@ class CategoryRecyclerViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-
-        return CategoryViewHolder(parent)
+        val binding = ItemCategoryCardBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return CategoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
@@ -58,7 +54,7 @@ class CategoryRecyclerViewAdapter(
         return categoryList.size
     }
 
-    interface OnCategoryItemClickListener{
+    interface OnCategoryItemClickListener {
         fun onCategoryCardClick(item: Category, position: Int)
     }
-        }
+}

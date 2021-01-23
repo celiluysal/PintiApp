@@ -9,18 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.views.adapters.CategoryRecyclerViewAdapter
-import com.example.pintiapp.models.CategoryModel
 import com.example.pintiapp.R
 import com.example.pintiapp.models.Category
 import com.example.pintiapp.viewModels.CategoriesTabViewModel
-import com.example.pintiapp.viewModels.ProductByShopViewModel
-import com.example.pintiapp.views.ProductByCategoryActivity
-import com.example.pintiapp.views.ProductByShopActivity
-import com.example.pintiapp.views.ProductDetailActivity
+import com.example.pintiapp.views.activities.ProductByCategoryActivity
 
 class CategoriesTabFragment : Fragment(), CategoryRecyclerViewAdapter.OnCategoryItemClickListener {
 

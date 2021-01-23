@@ -1,4 +1,4 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.content.Context
 import android.content.Intent

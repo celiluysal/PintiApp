@@ -10,6 +10,7 @@ import com.example.pintiapp.models.Result
 import com.example.pintiapp.service.OcrService
 import com.example.pintiapp.service.PintiService
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -27,9 +28,6 @@ class AddProductViewModel: ViewModel() {
 
     init {
         DaggerApiComponent.create().inject(this)
-
-
-//        DaggerOcrApiComponent.create().inject(this)
     }
 
     private val disposible = CompositeDisposable()
@@ -38,6 +36,7 @@ class AddProductViewModel: ViewModel() {
     val resultAddRecord = MutableLiveData<Result>()
 
     val resultPriceTag = MutableLiveData<OcrResult>()
+    val loadingPriceTag = MutableLiveData<Boolean>()
 
 //    val success = MutableLiveData<Boolean>()
     val loadError = MutableLiveData<Boolean>()
@@ -49,7 +48,9 @@ class AddProductViewModel: ViewModel() {
 
 
 
+
     fun getPrice(url: String) {
+        loadingPriceTag.value = true
         disposible.add(
             ocrService.getPrice(url)
                 .subscribeOn(Schedulers.newThread())
@@ -57,10 +58,12 @@ class AddProductViewModel: ViewModel() {
                 .subscribeWith(object: DisposableSingleObserver<OcrResult>() {
                     override fun onSuccess(value: OcrResult?) {
                         resultPriceTag.value = value
+                        loadingPriceTag.value = false
                     }
 
                     override fun onError(e: Throwable?) {
                         Log.e("getPrice e ", e.toString())
+                        loadingPriceTag.value = false
                     }
 
                 })
@@ -121,12 +124,12 @@ class AddProductViewModel: ViewModel() {
     fun uploadPhoto(name: String, photo: Bitmap) {
         val storage = Firebase.storage
         val storageRef = storage.reference
-        val ref = storageRef.child("images/products/$name.jpeg")
+        val photoRef = storageRef.child("images/products/$name.jpeg")
         val baos = ByteArrayOutputStream()
         photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = ref.putBytes(data)
+        var uploadTask = photoRef.putBytes(data)
         uploadTask.addOnFailureListener {
             Log.e("a", "addOnFailureListener")
         }.addOnSuccessListener {
@@ -146,12 +149,12 @@ class AddProductViewModel: ViewModel() {
     fun uploadPriceTag(name: String, photo: Bitmap) {
         val storage = Firebase.storage
         val storageRef = storage.reference
-        val ref = storageRef.child("images/price_tags/$name.jpeg")
+        val photoRef = storageRef.child("images/price_tags/$name.jpeg")
         val baos = ByteArrayOutputStream()
         photo.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = ref.putBytes(data)
+        var uploadTask = photoRef.putBytes(data)
         uploadTask.addOnFailureListener {
             Log.e("a", "addOnFailureListener")
         }.addOnSuccessListener {
@@ -161,8 +164,6 @@ class AddProductViewModel: ViewModel() {
                 // Got the download URL for 'users/me/profile.png'
                 Log.e("path: ", it.toString())
                 priceTagUrl.value = it.toString()
-
-                getPrice(it.toString())
                 Log.e("fdg","price tag")
 
             }.addOnFailureListener {

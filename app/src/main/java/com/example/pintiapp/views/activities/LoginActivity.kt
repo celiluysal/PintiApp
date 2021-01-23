@@ -1,4 +1,4 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -17,30 +18,24 @@ import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var editTextEmail: TextInputEditText
-    private lateinit var editTextPassword: TextInputEditText
-    private lateinit var buttonLogin: Button
-    private lateinit var register: TextView
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setToolbar()
 
         auth = FirebaseAuth.getInstance()
 
-        editTextEmail = findViewById(R.id.textInputEditTextEmailLogin)
-        editTextPassword= findViewById(R.id.textInputEditTextPasswordLogin)
-        buttonLogin = findViewById(R.id.buttonLogin)
 
-        buttonLogin.setOnClickListener {
+        binding.buttonLogin.setOnClickListener {
             if (checkFields())
-                login(editTextEmail.text.toString(), editTextPassword.text.toString())
+                login(binding.textInputEditTextEmailLogin.text.toString(), binding.textInputEditTextPasswordLogin.text.toString())
         }
 
-        register = findViewById(R.id.textViewRegister)
-        register.setOnClickListener {
+        binding.textViewRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
@@ -57,25 +52,25 @@ class LoginActivity : AppCompatActivity() {
     private fun checkFields(): Boolean {
         fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 
-        if (editTextEmail.text.toString().isNullOrBlank()) {
+        if (binding.textInputEditTextEmailLogin.text.toString().isNullOrBlank()) {
             toast(getString(R.string.email) + " " + getString(R.string.field_cant_be_empty))
             return false
         }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(editTextEmail.text.toString()).matches()){
+        else if (!Patterns.EMAIL_ADDRESS.matcher(binding.textInputEditTextEmailLogin.text.toString()).matches()){
             toast(getString(R.string.wrong_email_type))
             return false
         }
 
-        if (editTextPassword.text.toString().isNullOrBlank()) {
+        if (binding.textInputEditTextPasswordLogin.text.toString().isNullOrBlank()) {
             toast(getString(R.string.password) + " " + getString(R.string.field_cant_be_empty))
             return false
         }
         else {
-            if (editTextPassword.text.toString().length < 6){
+            if (binding.textInputEditTextPasswordLogin.text.toString().length < 6){
                 toast(getString(R.string.short_password))
                 return false
             }
-            else if (editTextPassword.text.toString().length > 18){
+            else if (binding.textInputEditTextPasswordLogin.text.toString().length > 18){
                 toast(getString(R.string.long_password))
                 return false
             }
@@ -117,13 +112,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setToolbar(){
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
-        val imageViewSearch = findViewById<ImageView>(R.id.imageViewSearch)
-        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
-
-        setSupportActionBar(toolbar)
-
-        imageViewSearch.visibility = ImageView.INVISIBLE
-        imageViewBack.visibility = ImageView.INVISIBLE
+        setSupportActionBar(binding.includeToolbar.mainToolbar)
+        binding.includeToolbar.imageViewSearch.visibility = ImageView.INVISIBLE
+        binding.includeToolbar.imageViewBack.visibility = ImageView.INVISIBLE
     }
 }

@@ -1,52 +1,51 @@
-package com.example.pintiapp.views
+package com.example.pintiapp.views.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.*
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ActivityMainBinding
+import com.example.pintiapp.databinding.ActivitySearchBinding
+import com.example.pintiapp.databinding.HomePageFragmentBinding
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.viewModels.SearchViewModel
 import com.example.pintiapp.views.adapters.ProductRecyclerViewAdapter
 
 class SearchActivity : AppCompatActivity(), ProductRecyclerViewAdapter.OnProductItemClickListener {
 
-    private lateinit var searchView: androidx.appcompat.widget.SearchView
+    private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: SearchViewModel
-    private lateinit var recyclerviewProducts: RecyclerView
     private lateinit var productRecyclerViewAdapter: ProductRecyclerViewAdapter
-    private lateinit var progressBarProduct: ProgressBar
-    private lateinit var textViewNotFound: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
 
-        recyclerviewProducts = findViewById(R.id.recyclerviewProducts)
-        progressBarProduct = findViewById(R.id.progressBarProduct)
-        textViewNotFound = findViewById(R.id.textViewNotFound)
-        searchView = findViewById(R.id.searchView)
+        binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.GONE
+        binding.includeShowProducts.textViewNotFound.visibility = TextView.GONE
 
-        progressBarProduct.visibility = ProgressBar.GONE
-        textViewNotFound.visibility = TextView.GONE
-
-        recyclerviewProducts.layoutManager = GridLayoutManager(this, 2)
+        binding.includeShowProducts.recyclerviewProducts.layoutManager =
+            GridLayoutManager(this, 2)
         productRecyclerViewAdapter = ProductRecyclerViewAdapter(arrayListOf(), this)
-        recyclerviewProducts.adapter = productRecyclerViewAdapter
-
+        binding.includeShowProducts.recyclerviewProducts.adapter = productRecyclerViewAdapter
 
         setToolbar()
 
-        searchView.onActionViewExpanded()
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+
+        binding.includeToolbar.searchView.onActionViewExpanded()
+        binding.includeToolbar.searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 TODO("Not yet implemented")
@@ -65,7 +64,7 @@ class SearchActivity : AppCompatActivity(), ProductRecyclerViewAdapter.OnProduct
     }
 
     private fun observeViewModel() {
-        progressBarProduct.visibility = ProgressBar.VISIBLE
+        binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.VISIBLE
         productRecyclerViewAdapter.clear()
 
         viewModel.products.observe(this, {
@@ -76,16 +75,16 @@ class SearchActivity : AppCompatActivity(), ProductRecyclerViewAdapter.OnProduct
 
         viewModel.loading.observe(this, {
             if (it)
-                progressBarProduct.visibility = ProgressBar.VISIBLE
+                binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.VISIBLE
             else
-                progressBarProduct.visibility = ProgressBar.GONE
+                binding.includeShowProducts.progressBarProduct.visibility = ProgressBar.GONE
         })
 
         viewModel.loadError.observe(this, {
             if (it)
-                textViewNotFound.visibility = TextView.VISIBLE
+                binding.includeShowProducts.textViewNotFound.visibility = TextView.VISIBLE
             else
-                textViewNotFound.visibility = TextView.GONE
+                binding.includeShowProducts.textViewNotFound.visibility = TextView.GONE
         })
 
     }
@@ -100,14 +99,12 @@ class SearchActivity : AppCompatActivity(), ProductRecyclerViewAdapter.OnProduct
     }
 
     private fun setToolbar() {
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.search_toolbar)
-        val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
+        setSupportActionBar(binding.includeToolbar.searchToolbar)
+        binding.includeToolbar.imageViewBack.visibility = ImageView.VISIBLE
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.includeToolbar.searchToolbar)
 
-        imageViewBack.visibility = ImageView.VISIBLE
-
-        imageViewBack.setOnClickListener {
+        binding.includeToolbar.imageViewBack.setOnClickListener {
             onBackPressed()
         }
     }

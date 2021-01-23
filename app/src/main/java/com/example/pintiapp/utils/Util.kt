@@ -40,7 +40,7 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 }
 
 fun getPriceText(context: Context,price: Double): String {
-    val priceFormat = DecimalFormat("#.00").format(price)
+    val priceFormat = DecimalFormat("#0.00").format(price)
     return priceFormat.toString() + context.getString(R.string.price_symbol)
 }
 

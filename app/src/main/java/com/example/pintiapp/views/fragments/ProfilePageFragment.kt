@@ -12,9 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ActivityNavigator
-import androidx.navigation.fragment.FragmentNavigator
-import com.example.pintiapp.views.LoginActivity
+import com.example.pintiapp.views.activities.LoginActivity
 import com.example.pintiapp.viewModels.ProfilePageViewModel
 import com.example.pintiapp.R
 import com.google.firebase.auth.FirebaseAuth

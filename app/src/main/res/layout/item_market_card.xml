@@ -94,7 +94,8 @@
                     android:maxHeight="35dp"
                     android:adjustViewBounds="true"
                     android:layout_below="@+id/textViewPrice"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignEnd="@+id/textViewPrice"
+                    android:layout_marginEnd="20dp"
                     app:srcCompat="@drawable/ic_location"
                     tools:ignore="VectorDrawableCompat" />
 

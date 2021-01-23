@@ -14,15 +14,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pintiapp.views.adapters.ProductRecyclerViewAdapter
-import com.example.pintiapp.views.ProductDetailActivity
+import com.example.pintiapp.views.activities.ProductDetailActivity
 import com.example.pintiapp.viewModels.HomePageViewModel
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.HomePageFragmentBinding
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.utils.CategoryStatic
 import com.example.pintiapp.utils.ShopStatic
+import com.example.pintiapp.views.activities.MainActivity
 
 class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemClickListener {
 
@@ -30,34 +30,29 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
         fun newInstance() = HomePageFragment()
     }
 
+    private var _binding: HomePageFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var viewModel: HomePageViewModel
-    private lateinit var swipeRefreshLayoutHomeFragment: SwipeRefreshLayout
-    private lateinit var recyclerviewProducts: RecyclerView
     private lateinit var productRecyclerViewAdapter: ProductRecyclerViewAdapter
-    private lateinit var progressBarHomeFragment: ProgressBar
-    private lateinit var textViewNotFound: TextView
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.home_page_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = HomePageFragmentBinding.inflate(inflater, container, false)
+        val rootView = binding.root
 
         setToolbar()
 
-        swipeRefreshLayoutHomeFragment = rootView.findViewById(R.id.swipeRefreshLayoutShowProduct)
-        recyclerviewProducts = rootView.findViewById(R.id.recyclerviewProducts)
-        progressBarHomeFragment = rootView.findViewById(R.id.progressBarProduct)
-        textViewNotFound = rootView.findViewById(R.id.textViewNotFound)
+        binding.includeLayout.progressBarProduct.visibility = ProgressBar.VISIBLE
+        binding.includeLayout.textViewNotFound.visibility = TextView.GONE
 
-        progressBarHomeFragment.visibility = ProgressBar.VISIBLE
-        textViewNotFound.visibility = TextView.GONE
-
-        recyclerviewProducts.layoutManager = GridLayoutManager(activity, 2)
+        binding.includeLayout.recyclerviewProducts.layoutManager = GridLayoutManager(activity, 2)
         productRecyclerViewAdapter = ProductRecyclerViewAdapter(arrayListOf(), this)
-        recyclerviewProducts.adapter = productRecyclerViewAdapter
+        binding.includeLayout.recyclerviewProducts.adapter = productRecyclerViewAdapter
 
-        swipeRefreshLayoutHomeFragment.setOnRefreshListener {
-            swipeRefreshLayoutHomeFragment.isRefreshing = false
+        binding.includeLayout.swipeRefreshLayoutShowProduct.setOnRefreshListener {
+            binding.includeLayout.swipeRefreshLayoutShowProduct.isRefreshing = false
             viewModel.refresh()
             observeViewModel()
         }
@@ -73,42 +68,50 @@ class HomePageFragment : Fragment(), ProductRecyclerViewAdapter.OnProductItemCli
         ShopStatic.shared.refresh()
         CategoryStatic.shared.refresh()
 
-
         ShopStatic.shared.shops.observe(viewLifecycleOwner, Observer {
             observeViewModel()
         })
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun observeViewModel() {
-        viewModel.products.observe(viewLifecycleOwner, Observer { products ->
-            products?.let { products ->
+        viewModel.products.observe(viewLifecycleOwner, Observer {
+            it?.let { products ->
                 productRecyclerViewAdapter.updateProducts(products)
             }
         })
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             if (it)
-                progressBarHomeFragment.visibility = ProgressBar.VISIBLE
+                binding.includeLayout.progressBarProduct.visibility = ProgressBar.VISIBLE
             else
-                progressBarHomeFragment.visibility = ProgressBar.GONE
+                binding.includeLayout.progressBarProduct.visibility = ProgressBar.GONE
         })
 
         viewModel.loadError.observe(viewLifecycleOwner, Observer {
             if (it)
-                textViewNotFound.visibility = TextView.VISIBLE
+                binding.includeLayout.textViewNotFound.visibility = TextView.VISIBLE
             else
-                textViewNotFound.visibility = TextView.GONE
+                binding.includeLayout.textViewNotFound.visibility = TextView.GONE
 
         })
     }
 
 
     private fun setToolbar() {
+
+
+
         val m = (activity as AppCompatActivity)
-        val toolbar = m.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
         val imageViewSearch = m.findViewById<ImageView>(R.id.imageViewSearch)
         val imageViewBack = m.findViewById<ImageView>(R.id.imageViewBack)
+
+
 
         imageViewSearch.visibility = ImageView.INVISIBLE
         imageViewBack.visibility = ImageView.INVISIBLE

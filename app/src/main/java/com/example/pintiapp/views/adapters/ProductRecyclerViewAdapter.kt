@@ -9,85 +9,63 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pintiapp.R
+import com.example.pintiapp.databinding.ItemProductCardBinding
 import com.example.pintiapp.models.Product
 import com.example.pintiapp.utils.*
 
-class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
-                                 var clickListener: OnProductItemClickListener
-):
-        RecyclerView.Adapter<ProductRecyclerViewAdapter.HomeViewHolder>() {
+class ProductRecyclerViewAdapter(
+    val productList: ArrayList<Product>,
+    var clickListener: OnProductItemClickListener
+) :
+    RecyclerView.Adapter<ProductRecyclerViewAdapter.HomeViewHolder>() {
 
-    class HomeViewHolder(container: ViewGroup): RecyclerView.ViewHolder(
-            LayoutInflater.from(container.context).inflate(
-                    R.layout.item_product_card,
-                    container,
-                    false
-            )
-    ) {
-        val imageViewProduct : ImageView = itemView.findViewById(R.id.imageViewProduct)
-        val textViewProductName : TextView = itemView.findViewById(R.id.textViewProductName)
-        val textViewCounter : TextView = itemView.findViewById(R.id.textViewCounter)
-        val counter_layout : RelativeLayout = itemView.findViewById(R.id.counter_layout)
+    class HomeViewHolder(val binding: ItemProductCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        val cardViewShop1 : CardView = itemView.findViewById(R.id.cardViewShop1)
-        val textViewShop1 : TextView = itemView.findViewById(R.id.textViewShop1)
-        val textViewShopPrice1 : TextView = itemView.findViewById(R.id.textViewShopPrice1)
+        fun bind(product: Product, action: OnProductItemClickListener) {
+            binding.counterLayout.visibility = RelativeLayout.INVISIBLE
+            binding.cardViewShop1.visibility = CardView.INVISIBLE
+            binding.cardViewShop2.visibility = CardView.INVISIBLE
+            binding.cardViewShop3.visibility = CardView.INVISIBLE
 
-        val cardViewShop2 : CardView = itemView.findViewById(R.id.cardViewShop2)
-        val textViewShop2 : TextView = itemView.findViewById(R.id.textViewShop2)
-        val textViewShopPrice2 : TextView = itemView.findViewById(R.id.textViewShopPrice2)
+            binding.imageViewProduct.loadImage(product.photoURL, getProgressDrawable(itemView.context))
 
-        val cardViewShop3 : CardView = itemView.findViewById(R.id.cardViewShop3)
-        val textViewShop3 : TextView = itemView.findViewById(R.id.textViewShop3)
-        val textViewShopPrice3 : TextView = itemView.findViewById(R.id.textViewShopPrice3)
-
-        fun bind(product: Product, action: OnProductItemClickListener){
-            counter_layout.visibility = RelativeLayout.INVISIBLE
-            cardViewShop1.visibility = CardView.INVISIBLE
-            cardViewShop2.visibility = CardView.INVISIBLE
-            cardViewShop3.visibility = CardView.INVISIBLE
-
-            imageViewProduct.loadImage(product.photoURL, getProgressDrawable(itemView.context))
-
-
-            textViewProductName.text = product.name
+            binding.textViewProductName.text = product.name
 
             val recordCount = product.records.size
-            if (recordCount > 3){
-                textViewCounter.text = (
+            if (recordCount > 3) {
+                binding.includeCounterCard.textViewCounter.text = (
                         recordCount.toString() + " " +
                                 itemView.resources.getString(R.string.price))
-                counter_layout.visibility = RelativeLayout.VISIBLE
-            }
-            else
-                counter_layout.visibility = RelativeLayout.INVISIBLE
-
+                binding.counterLayout.visibility = RelativeLayout.VISIBLE
+            } else
+                binding.counterLayout.visibility = RelativeLayout.INVISIBLE
+//
             if (product.records.isNotEmpty()) {
-                textViewShop1.text = ShopStatic.shared.getShopName(product.records[0].shopId)
-                textViewShopPrice1.text = getPriceText(itemView.context, product.records[0].price)
-                cardViewShop1.visibility = CardView.VISIBLE
+                binding.textViewShop1.text = ShopStatic.shared.getShopName(product.records[0].shopId)
+                binding.textViewShopPrice1.text = getPriceText(itemView.context, product.records[0].price)
+                binding.cardViewShop1.visibility = CardView.VISIBLE
 
                 if (product.records.size > 1) {
-                    textViewShop2.text = ShopStatic.shared.getShopName(product.records[1].shopId)
-                    textViewShopPrice2.text = getPriceText(itemView.context, product.records[1].price)
-                    cardViewShop2.visibility = CardView.VISIBLE
-                }
-                else
-                    cardViewShop2.visibility = CardView.INVISIBLE
+                    binding.textViewShop2.text = ShopStatic.shared.getShopName(product.records[1].shopId)
+                    binding.textViewShopPrice2.text =
+                        getPriceText(itemView.context, product.records[1].price)
+                    binding.cardViewShop2.visibility = CardView.VISIBLE
+                } else
+                    binding.cardViewShop2.visibility = CardView.INVISIBLE
 
 
                 if (product.records.size > 2) {
-                    textViewShop3.text = ShopStatic.shared.getShopName(product.records[2].shopId)
-                    textViewShopPrice3.text = getPriceText(itemView.context, product.records[2].price)
-                    cardViewShop3.visibility = CardView.VISIBLE
-                }
-                else
-                    cardViewShop3.visibility = CardView.INVISIBLE
-            }
-            else {
-                cardViewShop1.visibility = CardView.INVISIBLE
-                cardViewShop2.visibility = CardView.INVISIBLE
-                cardViewShop3.visibility = CardView.INVISIBLE
+                    binding.textViewShop3.text = ShopStatic.shared.getShopName(product.records[2].shopId)
+                    binding.textViewShopPrice3.text =
+                        getPriceText(itemView.context, product.records[2].price)
+                    binding.cardViewShop3.visibility = CardView.VISIBLE
+                } else
+                    binding.cardViewShop3.visibility = CardView.INVISIBLE
+            } else {
+                binding.cardViewShop1.visibility = CardView.INVISIBLE
+                binding.cardViewShop2.visibility = CardView.INVISIBLE
+                binding.cardViewShop3.visibility = CardView.INVISIBLE
             }
 
             itemView.setOnClickListener {
@@ -109,8 +87,11 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-
-        return HomeViewHolder(parent)
+        val binding = ItemProductCardBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return HomeViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
@@ -121,7 +102,7 @@ class ProductRecyclerViewAdapter(val productList: ArrayList<Product>,
         return productList.size
     }
 
-    interface OnProductItemClickListener{
+    interface OnProductItemClickListener {
         fun onProductCardClick(item: Product, position: Int)
     }
 
