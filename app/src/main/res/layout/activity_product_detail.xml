@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.ProductDetailActivity">
+    tools:context=".ui.product_detail.ProductDetailActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar_layout"
@@ -84,12 +84,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardViewShopProductDetail"
-                android:paddingVertical="@dimen/grid_space"
-                tools:listitem="@layout/item_market_card"
-                >
-
+                android:paddingTop="@dimen/grid_space"
+                android:paddingBottom="@dimen/ad_banner_space"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_shop_card">
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
-
     </androidx.core.widget.NestedScrollView>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ProductDetailActivityBanner">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>

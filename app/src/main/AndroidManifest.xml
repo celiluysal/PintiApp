@@ -34,34 +34,34 @@
         </provider>
         
         <activity
-            android:name=".views.activities.ProductByShopActivity"
+            android:name=".ui.categories.shops_tab.product_by_shop.ProductByShopActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.activities.ProductByCategoryActivity"
+            android:name=".ui.categories.categories_tab.product_by_category.ProductByCategoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.activities.SearchActivity"
+            android:name=".ui.categories.search.SearchActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.activities.BarcodeScanActivity"
+            android:name=".ui.scan_barcode.BarcodeScanActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.activities.AddProductActivity"
+            android:name=".ui.add_product.AddProductActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".views.activities.ProductDetailActivity"
+            android:name=".ui.product_detail.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activities.RegisterActivity"
+            android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activities.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activities.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activities.LauncherActivity"
+            android:name=".ui.launcher.LauncherActivity"
             android:theme="@style/splash_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +72,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8287687880088165~3815470780"/>
     </application>
 
 </manifest>

@@ -25,7 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="@dimen/grid_space"
-            android:paddingEnd="@dimen/grid_space" />
+            android:paddingEnd="@dimen/grid_space"
+            android:paddingBottom="@dimen/ad_banner_space"
+            android:clipToPadding="false"/>
 
         <ProgressBar
             android:id="@+id/progressBarProduct"

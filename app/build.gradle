@@ -42,10 +42,8 @@ android {
     }
 }
 
-def lifeCycleExtensionsVersion = '1.1.1'
 def retrofitVersion = '2.3.0'
 def daggerVersion = '2.13'
-def glideVersion = '4.8.0'
 def rxJavaVersion = '2.0.1'
 
 dependencies {
@@ -85,11 +83,14 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'com.karumi:dexter:6.2.2'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
+
 
 }

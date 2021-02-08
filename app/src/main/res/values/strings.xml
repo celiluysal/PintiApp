@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Pinti</string>
 
+    <string name="MainActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="BarcodeScanActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="ProductDetailActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ProductDetailActivityInterstitial">ca-app-pub-3940256099942544/103317371278111</string>
+
+    <string name="ProductByCategoryActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ProductByShopActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="SearchActivityBanner">ca-app-pub-3940256099942544/6300978111</string>
+
     <string name="home_page">Anasayfa</string>
     <string name="categories_page">Kategoriler</string>
     <string name="add_product_page">Ürün Ekle</string>

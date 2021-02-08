@@ -67,15 +67,5 @@
         <item name="borderWidth">1dp</item>
     </style>
 
-    <style name="bottom_nav_bar_style"
-        parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="fontFamily">?attr/fontFamily</item>
-    </style>
-
-
-
-
-
-
 
 </resources>

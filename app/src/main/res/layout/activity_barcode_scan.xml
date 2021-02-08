@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.BarcodeScanActivity">
+    tools:context=".ui.scan_barcode.BarcodeScanActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar_layout"
@@ -27,7 +27,33 @@
             android:layout_height="match_parent"
             app:borderColor="@color/white"
             app:borderLength="20dp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toTopOf="parent"
+            ads:adSize="LARGE_BANNER"
+            ads:adUnitId="@string/BarcodeScanActivityBanner">
+        </com.google.android.gms.ads.AdView>
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:adSize="LARGE_BANNER"
+            ads:adUnitId="@string/BarcodeScanActivityBanner">
+        </com.google.android.gms.ads.AdView>
 
         <TextView
             android:id="@+id/textViewNotFound"

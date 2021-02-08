@@ -6,19 +6,19 @@
     app:startDestination="@id/homePageFragment">
     <fragment
         android:id="@+id/homePageFragment"
-        android:name="com.example.pintiapp.views.fragments.HomePageFragment"
+        android:name="com.example.pintiapp.ui.home.HomePageFragment"
         tools:layout="@layout/home_page_fragment" />
     <fragment
         android:id="@+id/categoriesPageFragment"
-        android:name="com.example.pintiapp.views.fragments.CategoriesPageFragment"
+        android:name="com.example.pintiapp.ui.categories.CategoriesPageFragment"
         tools:layout="@layout/categories_page_fragment" />
     <fragment
         android:id="@+id/addProductPageFragment"
-        android:name="com.example.pintiapp.views.fragments.ScanBarcodePageFragment"
+        android:name="com.example.pintiapp.ui.scan_barcode.ScanBarcodePageFragment"
         tools:layout="@layout/scan_barcode_page_fragment" />
     <fragment
         android:id="@+id/profilePageFragment"
-        android:name="com.example.pintiapp.views.fragments.ProfilePageFragment"
+        android:name="com.example.pintiapp.ui.profile.ProfilePageFragment"
         android:label="profile_page"
         tools:layout="@layout/profile_page_fragment" />
 </navigation>
